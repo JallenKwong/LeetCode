@@ -18,3 +18,7 @@ Given a 2d grid map of **'1'**s (land) and **'0'**s (water), count the number of
 	00011
 	
 	Output: 3
+
+**Thinking**:
+
+图的连通问题，参考Algorithms4th的图的章节

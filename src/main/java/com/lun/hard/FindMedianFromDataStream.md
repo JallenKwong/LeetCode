@@ -18,3 +18,7 @@ Design a data structure that supports the following two operations:
 	findMedian() -> 1.5
 	addNum(3) 
 	findMedian() -> 2
+
+**Thinking**:
+
+用两个优先队列（二叉堆），一个存小于中位数的数，另一个存大于中位数的数

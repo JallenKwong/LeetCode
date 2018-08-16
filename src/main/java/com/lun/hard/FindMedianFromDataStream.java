@@ -1,11 +1,8 @@
 package com.lun.hard;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.PriorityQueue;
 
-import org.junit.Test;
-import org.junit.Assert;
 
 public class FindMedianFromDataStream {
 	

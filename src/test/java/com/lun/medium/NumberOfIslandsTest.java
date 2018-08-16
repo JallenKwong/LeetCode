@@ -3,7 +3,7 @@ package com.lun.medium;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestNumberOfIslands {
+public class NumberOfIslandsTest {
     @Test
     public void testNumIslands() {
     	NumberOfIslands noi = new NumberOfIslands();

@@ -3,7 +3,7 @@ package com.lun.hard;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestFindMedianFromDataStream {
+public class FindMedianFromDataStreamTest {
     @Test
     public void test() {
     	FindMedianFromDataStream f = new FindMedianFromDataStream();
