@@ -37,9 +37,9 @@ targetFile.close()
 
 print "Update README.md successfully! Press Enter to exit."
 
-
 try:
-    input()
+    raw_input()
+    print "Bye!"
 except:
     print "Bye!"
     
