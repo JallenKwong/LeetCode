@@ -53,7 +53,7 @@ mdFile.write("# " + fileName + " #\n\n")
 
 mdFile.close()
 
-#生成文件
+#生成Java文件
 
 javaFile = open(dirName + fileName + ".java","w")
 
@@ -62,7 +62,21 @@ javaFile.write("public class " + fileName + " {\n\n}\n")
 
 javaFile.close()
 
-print "Create " + fileName + ".md and" + fileName +".java successfully! Press Enter to exit."
+#生成测试Java文件
+
+testFile = open((dirName + fileName + "Test.java").replace('main','test'),"w")
+
+testFile.write("package com.lun." + difficulty + ";\n\n")
+testFile.write("import org.junit.Assert;\n")
+testFile.write("import org.junit.Test;\n\n")
+testFile.write("public class " + fileName + "Test {\n\n")
+testFile.write("\t@Test\n")
+testFile.write("\tpublic void test() {\n\n\t}\n}\n")
+
+testFile.close()
+
+
+print "Create %s.md and %s.java and %sTest.java successfully! Press Enter to exit."%(fileName,fileName,fileName)
 
 try:
     raw_input()
