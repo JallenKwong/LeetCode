@@ -1,5 +1,7 @@
 # ThreeSumWithMultiplicity #
 
+tag:其它
+
 [https://leetcode.com/problems/3sum-with-multiplicity](https://leetcode.com/problems/3sum-with-multiplicity)
 
 Given an integer array A, and an integer target, return the number of tuples i, j, k  such that i < j < k and A[i] + A[j] + A[k] == target.

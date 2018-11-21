@@ -1,5 +1,7 @@
 # DesignHashMap #
 
+tag:哈希表
+
 [https://leetcode.com/problems/design-hashmap/](https://leetcode.com/problems/design-hashmap/)
 
 Design a HashMap without using any built-in hash table libraries.
