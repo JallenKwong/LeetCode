@@ -3,6 +3,8 @@ package com.lun.medium;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.lun.util.MyUtils;
+
 public class MinimumPathSumTest {
 
 	@Test
@@ -41,12 +43,23 @@ public class MinimumPathSumTest {
 	
 	@Test
 	public void test5() {
-		// 原本是来自于leetcode的src/test/resources/2DArray.txt，但是直接写在源文件上，会将Eclipse卡死
-		int[][] grid = {{1}};
 		
-		Assert.assertEquals(1, new MinimumPathSum().minPathSum(grid));
-		Assert.assertEquals(1, new MinimumPathSum().minPathSum2(grid));
+		int[][] grid = MyUtils.read2DIntArray("src/test/resources/2DArray.txt");
+		
+		Assert.assertEquals(823, new MinimumPathSum().minPathSum(grid));
+		
 	}
+	
+	@Test
+	public void test6() {
+		
+		int[][] grid = MyUtils.read2DIntArray("src/test/resources/2DArray.txt");
+		
+		Assert.assertEquals(823, new MinimumPathSum().minPathSum2(grid));
+		
+	}
+	
+	
 	
 
 }
