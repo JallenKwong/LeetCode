@@ -15,12 +15,12 @@ import java.util.Scanner;
 public class MyUtils {
 
 	/**
-	 * 整型list转换成原始整型类型数组
+	 * 包装整型list转换成原始整型类型数组
 	 * 
 	 * @param src
 	 * @return
 	 */
-	public static int[] listToArray(List<Integer> src) {
+	public static int[] integerListToIntArray(List<Integer> src) {
 		
 		if(src == null || src.isEmpty()) {
 			throw new IllegalArgumentException();
@@ -56,7 +56,7 @@ public class MyUtils {
 			list.add(scanner.nextInt());
 		}
 
-		return listToArray(list);
+		return integerListToIntArray(list);
 	}
 	
 	/**

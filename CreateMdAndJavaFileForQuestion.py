@@ -67,7 +67,7 @@ javaFile.close()
 testFile = open((dirName + fileName + "Test.java").replace('main','test'),"w")
 
 testFile.write("package com.lun." + difficulty + ";\n\n")
-testFile.write("import org.junit.Assert;\n")
+testFile.write("import static org.junit.Assert.*;\n")
 testFile.write("import org.junit.Test;\n\n")
 testFile.write("public class " + fileName + "Test {\n\n")
 testFile.write("\t@Test\n")
