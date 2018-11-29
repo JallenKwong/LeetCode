@@ -2,7 +2,7 @@
 
 #为Leetcode的题目，生成 md 及 java文件
 
-import os
+import os,sys,re
 
 os.chdir("C:\\eclipse-workspace\\LeetCode")
 
@@ -23,16 +23,6 @@ while(True):
     
 print "Please input the name of problem. e.g HelloWorld"
 
-import re
-
-while(True):
-
-    fileName = raw_input()
-
-    if re.match(r"^[A-Z][A-Za-z0-9]*", fileName):
-        break
-    else:
-        print "Input file name wrongly. Please input again."
 
 dirName = "src\\main\\java\\com\\lun\\"
 
@@ -45,11 +35,27 @@ else:
 
 dirName = dirName + difficulty + "\\"
 
+
+while(True):
+
+    fileName = raw_input()
+
+    if re.match(r"^[A-Z][A-Za-z0-9]*", fileName):
+        if os.path.exists(dirName + fileName + ".md"):
+            print(dirName + fileName + ".md's existed. Please check.")
+            continue
+        break
+    else:
+        print "Input file name wrongly. Please input again."
+    
+
 #生成Md文件
 
 mdFile = open(dirName + fileName + ".md","w")
 
 mdFile.write("# " + fileName + " #\n\n")
+mdFile.write("tag:\n\n")#标签
+mdFile.write("[]()\n\n")#链接地址
 
 mdFile.close()
 

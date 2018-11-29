@@ -2,75 +2,9 @@ package com.lun.medium;
 
 import java.util.Stack;
 
-public class SumRootToLeafNumber {
-	
-	public static class TreeNode {
-		int val;
-		TreeNode left;
-		TreeNode right;
-		TreeNode(int x) { val = x; }
+import com.lun.util.BinaryTree.TreeNode;
 
-	}
-	
-	/**
-	 * 非递归版二叉查找树的构建
-	 * 
-	 * @param array
-	 * @return
-	 */
-	public static TreeNode integerArray2BinaryTree(Integer[] array) {
-		if(array == null || array.length == 0) {
-			throw new IllegalArgumentException("Illegal array.");
-		}
-		
-		TreeNode root = new TreeNode(array[0]);
-		
-		for(int i = 1; i < array.length; i++) {
-			
-			TreeNode p = root;
-			
-			while(true) {
-				if(array[i] < p.val) {
-					
-					if(p.left != null) {
-						p = p.left;
-					}else {
-						p.left = new TreeNode(array[i]);
-						break;
-					}
-					
-				}
-				
-				if(array[i] > p.val){
-					if(p.right != null) {
-						p = p.right;
-					}else {
-						p.right = new TreeNode(array[i]);
-						break;
-					}
-				}
-				
-				if(array[i] == p.val) 
-					break;
-			}
-		}
-		
-		return root;
-	}
-	
-	/**
-	 * 中序遍历打印
-	 * 
-	 * @param root
-	 */
-	public static void print(TreeNode root) {
-		if(root == null)
-			return;
-		print(root.left);
-		System.out.println(root.val);
-		print(root.right);
-	}
-	
+public class SumRootToLeafNumber {
 	
     /**
      * 非递归版的

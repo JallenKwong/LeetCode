@@ -14,24 +14,47 @@ srcDir = "src\\main\\java\\com\\lun\\"
 
 dirs = ['easy','medium','hard']
 
-for d in dirs:
+counts = []#题数
 
-    #print d
+targetFile.write(">不积跬步，无以至千里。    ——荀子《劝学》\n\n")
+
+for d in dirs:
     
     targetFile.write("# " + d.upper() + " #\n\n")
 
     dirs2 = os.listdir(srcDir + d)
 
+    count = 0
     for d2 in dirs2:
 
         if d2.endswith('.md'):
+            count = count + 1
+            #读取文件内的标签内容
+            mdFile = open(srcDir + d + '\\' + d2, "r")
+            lines = mdFile.readlines()
+            tag = ""
+            
+            for line in lines:
+                if line.startswith("tag:"):
+                    tag = line.split(':')[1]
+                    break
+            #---------------------
             fileName = d2.split('.')
-
             dir1 = (srcDir + d + "\\").replace("\\","/")
             
             line = "- [" + fileName[0] + "](" + dir1 + d2 + \
-                ") --- [Solution Code]("+ dir1 + fileName[0]  + ".java)\n\n"
+                ") --- [Solution Code]("+ dir1 + fileName[0]  + ".java) --- " + tag + "\n\n"
             targetFile.write(line)
+    counts.append(count)
+
+total = 0
+for num in counts:
+    total = total + num
+
+targetFile.write("# SUM UP #\n\n")
+targetFile.write("Total|Easy|Medium|Hard\n")
+targetFile.write("---|---|---|---\n")
+targetFile.write("%d|%d|%d|%d\n\n" % (total, counts[0], counts[1], counts[2]))
 
 targetFile.close()
 

@@ -3,20 +3,22 @@ package com.lun.medium;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.lun.medium.SumRootToLeafNumber.TreeNode;
+import com.lun.util.BinaryTree;
+import com.lun.util.BinaryTree.TreeNode;
+
 
 public class SumRootToLeafNumberTest {
 
 	@Test
 	public void test() {
-		TreeNode root = SumRootToLeafNumber.integerArray2BinaryTree(new Integer[]{1, 2, 3});
-		SumRootToLeafNumber.print(root);
+		TreeNode root = BinaryTree.integerArray2BinaryTree(new int[]{1, 2, 3});
+		BinaryTree.inorderTraversing(root);
 	}
 	
 	@Test
 	public void test2() {
-		TreeNode root = SumRootToLeafNumber.integerArray2BinaryTree(new Integer[]{4, 9, 0, 5, 1});
-		SumRootToLeafNumber.print(root);
+		TreeNode root = BinaryTree.integerArray2BinaryTree(new int[]{4, 9, 0, 5, 1});
+		BinaryTree.inorderTraversing(root);
 	}
 	
 	@Test
