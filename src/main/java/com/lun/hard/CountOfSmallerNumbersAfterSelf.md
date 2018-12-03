@@ -1,6 +1,6 @@
 # CountOfSmallerNumbersAfterSelf #
 
-tag:二叉树 归并排序
+tag:Divide and Conquer, Binary Indexed Tree, Binary Search Tree, Segment Tree
 
 [https://leetcode.com/problems/count-of-smaller-numbers-after-self/](https://leetcode.com/problems/count-of-smaller-numbers-after-self/)
 

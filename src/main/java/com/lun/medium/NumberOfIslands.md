@@ -1,6 +1,6 @@
 # NumberOfIslands #
 
-tag:图
+tag:Depth-first Search, Breadth-first Search, Union Find
 
 [https://leetcode.com/problems/number-of-islands/](https://leetcode.com/problems/number-of-islands/)
 

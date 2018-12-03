@@ -1,6 +1,6 @@
 # BestTimeToBuyAndSellStockIII #
 
-tag:动态规划
+tag:Dynamic Programming, Array
 
 [https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)
 

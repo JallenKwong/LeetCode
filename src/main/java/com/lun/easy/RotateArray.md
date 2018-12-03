@@ -1,6 +1,6 @@
 # RotateArray #
 
-tag:数组
+tag:Array
 
 [https://leetcode.com/problems/rotate-array/](https://leetcode.com/problems/rotate-array/)
 

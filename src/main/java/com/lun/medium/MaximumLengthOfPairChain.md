@@ -1,6 +1,6 @@
 # MaximumLengthOfPairChain #
 
-tag:动态规划 贪心算法
+tag:Dynamic Programming, Greedy
 
 [https://leetcode.com/problems/maximum-length-of-pair-chain/](https://leetcode.com/problems/maximum-length-of-pair-chain/)
 

@@ -1,6 +1,6 @@
 # OnesAndZeroes #
 
-tag:动态规划
+tag:Dynamic Programming
 
 [https://leetcode.com/problems/ones-and-zeroes/](https://leetcode.com/problems/ones-and-zeroes/)
 

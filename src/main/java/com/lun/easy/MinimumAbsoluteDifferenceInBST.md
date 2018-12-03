@@ -1,6 +1,6 @@
 # MinimumAbsoluteDifferenceInBST #
 
-tag:二叉查找树
+tag:Binary Search Tree
 
 [https://leetcode.com/problems/minimum-absolute-difference-in-bst/](https://leetcode.com/problems/minimum-absolute-difference-in-bst/)
 

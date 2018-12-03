@@ -1,6 +1,6 @@
 # EvaluateDivision #
 
-tag:图
+tag:Graph
 
 [https://leetcode.com/problems/evaluate-division/](https://leetcode.com/problems/evaluate-division/)
 

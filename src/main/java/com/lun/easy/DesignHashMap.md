@@ -1,6 +1,6 @@
 # DesignHashMap #
 
-tag:哈希表
+tag:Hash Table, Design
 
 [https://leetcode.com/problems/design-hashmap/](https://leetcode.com/problems/design-hashmap/)
 

@@ -1,6 +1,6 @@
 # FindMedianFromDataStream #
 
-tag:优先队列
+tag:Heap, Design
 
 [https://leetcode.com/problems/find-median-from-data-stream/](https://leetcode.com/problems/find-median-from-data-stream/)
 

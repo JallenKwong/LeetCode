@@ -3,8 +3,10 @@ package com.lun.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * 私人工具类
@@ -14,6 +16,17 @@ import java.util.Scanner;
  */
 public class MyUtils {
 
+	/**
+	 * 
+	 * list转换成set
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static <T> Set<T> listToSet(List<T> list){
+		return new HashSet<T>(list);
+	}
+	
 	/**
 	 * 包装整型list转换成原始整型类型数组
 	 * 

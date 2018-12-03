@@ -1,6 +1,6 @@
 # MinimumPathSum #
 
-tag:图 动态规划
+tag:Graph, Dynamic Programming
 
 [https://leetcode.com/problems/minimum-path-sum/](https://leetcode.com/problems/minimum-path-sum/)
 

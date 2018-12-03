@@ -1,6 +1,6 @@
 # Rectangle Area #
 
-tag:其他
+tag:Math
 
 [https://leetcode.com/problems/rectangle-area/](https://leetcode.com/problems/rectangle-area/)
 

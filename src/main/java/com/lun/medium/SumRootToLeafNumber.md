@@ -1,6 +1,6 @@
 # SumRootToLeafNumber #
 
-tag:二叉树
+tag:Tree, Depth-first Search
 
 [https://leetcode.com/problems/sum-root-to-leaf-numbers/](https://leetcode.com/problems/sum-root-to-leaf-numbers/)
 
