@@ -8,8 +8,7 @@ import static org.junit.Assert.*;
 
 public class GetDepthOfBinaryTreeTest {
 	
-	@Test
-	public void test() {
+	public static BinaryTreeNode makeATree() {
 		BinaryTreeNode root = new BinaryTreeNode(1);
 		
 		root.left = new BinaryTreeNode(2);
@@ -20,6 +19,13 @@ public class GetDepthOfBinaryTreeTest {
 		root.left.right.left = new BinaryTreeNode(5);
 		
 		root.right.right = new BinaryTreeNode(3);
+		return root;
+	}
+	
+	
+	@Test
+	public void test() {
+		BinaryTreeNode root = makeATree();
 		
 		assertEquals(4, new GetDepthOfBinaryTree().getDepthOfBinaryTree(root));
 	}
