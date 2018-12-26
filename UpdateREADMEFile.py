@@ -18,6 +18,9 @@ counts = []#题数
 
 targetFile.write(">不积跬步，无以至千里。    ——荀子《劝学》\n\n")
 
+targetFile.write("# Sword Toward Offer #\n\n")
+targetFile.write("[Sword Toward Offer](src/main/java/com/lun/swordtowardoffer/)\n\n")
+
 for d in dirs:
     
     targetFile.write("# " + d.upper() + " #\n\n")

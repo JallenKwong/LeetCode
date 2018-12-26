@@ -28,6 +28,17 @@ tag:编程基础
 
 [ScanMatrixClockwisely](ScanMatrixClockwisely.java)
 
+## 30. 包含min函数的栈 ##
+
+tag:栈
+
+	定义栈的数据结构，请在该类型中实现一个能够得到栈的最小元素的min函数。
+	在该栈中，调用min、push、pop的时间复杂度都是O(1)
+
+PS.用多一个栈压入最小值
+
+[MyStack](MyStack.java)
+
 ## 32. 从上到下打印二叉树 ##
 
 tag:二叉树
@@ -86,6 +97,20 @@ tag:二叉树
 
 tag:二叉树
 
+	输入一棵二叉树和一个整数，打印出二叉树中节点值的和为输入整数的所有路径。
+	从树的根结点开始往下一直到叶节点所经过的节点形成一路径。
+
+	 10
+	 /\
+	5 22
+	/\
+	4 7
+	
+	该图中有两条和为22的路径：a.10,5,7 b.10,12
+
+PS:二叉树的**前序遍历**
+
+[SumRootToLeafNumber](SumRootToLeafNumber.java)
 
 ## 53. 在排序数组中查找数字 ##
 

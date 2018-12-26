@@ -1,8 +1,18 @@
 >不积跬步，无以至千里。    ——荀子《劝学》
 
+# Sword Toward Offer #
+
+[Sword Toward Offer](src/main/java/com/lun/swordtowardoffer/)
+
 # EASY #
 
+- [BinaryTreePaths](src/main/java/com/lun/easy/BinaryTreePaths.md) --- [Solution Code](src/main/java/com/lun/easy/BinaryTreePaths.java) --- Tree, Depth-first Search
+
+
 - [DesignHashMap](src/main/java/com/lun/easy/DesignHashMap.md) --- [Solution Code](src/main/java/com/lun/easy/DesignHashMap.java) --- Hash Table, Design
+
+
+- [DesignHashSet](src/main/java/com/lun/easy/DesignHashSet.md) --- [Solution Code](src/main/java/com/lun/easy/DesignHashSet.java) --- Hash Table, Design
 
 
 - [MinimumAbsoluteDifferenceInBST](src/main/java/com/lun/easy/MinimumAbsoluteDifferenceInBST.md) --- [Solution Code](src/main/java/com/lun/easy/MinimumAbsoluteDifferenceInBST.java) --- Binary Search Tree
@@ -34,6 +44,9 @@
 - [OnesAndZeroes](src/main/java/com/lun/medium/OnesAndZeroes.md) --- [Solution Code](src/main/java/com/lun/medium/OnesAndZeroes.java) --- Dynamic Programming
 
 
+- [PushDominoes](src/main/java/com/lun/medium/PushDominoes.md) --- [Solution Code](src/main/java/com/lun/medium/PushDominoes.java) --- Two Pointers
+
+
 - [RectangleArea](src/main/java/com/lun/medium/RectangleArea.md) --- [Solution Code](src/main/java/com/lun/medium/RectangleArea.java) --- Math
 
 
@@ -54,9 +67,12 @@
 - [FindMedianFromDataStream](src/main/java/com/lun/hard/FindMedianFromDataStream.md) --- [Solution Code](src/main/java/com/lun/hard/FindMedianFromDataStream.java) --- Heap, Design
 
 
+- [WordBreakII](src/main/java/com/lun/hard/WordBreakII.md) --- [Solution Code](src/main/java/com/lun/hard/WordBreakII.java) --- Dynamic Programming, Backtracking, Depth-first Search
+
+
 # SUM UP #
 
 Total|Easy|Medium|Hard
 ---|---|---|---
-16|4|9|3
+20|6|10|4
 
