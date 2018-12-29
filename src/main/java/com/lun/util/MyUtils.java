@@ -17,6 +17,17 @@ import java.util.Set;
 public class MyUtils {
 
 	/**
+	 * 检查基本整型数组是否为空
+	 * 
+	 * @param array
+	 * @return
+	 */
+	public static boolean checkArrayEmpty(int[] array) {
+		return array == null || array.length == 0;
+	}
+	
+	
+	/**
 	 * 
 	 * list转换成set
 	 * 

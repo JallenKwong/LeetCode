@@ -17,6 +17,32 @@ public class BinaryTree {
 
 	}
 	
+	/**
+	 * 判断两棵二叉树是否相同
+	 * 
+	 * @param root1
+	 * @param root2
+	 * @return
+	 */
+	public static boolean equals(TreeNode root1, TreeNode root2) {
+		
+		if(root1 == null && root2 != null 
+				|| root1 != null && root2 == null)
+			return false;
+		
+		if(root1 != null && root2 != null) {
+			if(root1.val != root2.val) {
+				return false;
+			}
+			
+//			//判断左右子树
+			return equals(root1.left, root2.left)
+					&& equals(root1.right, root2.right);
+		}
+		
+		return true;
+	}
+	
 	
 	/**
 	 * 非递归版二叉查找树的构建
