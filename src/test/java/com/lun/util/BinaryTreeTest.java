@@ -13,15 +13,18 @@ public class BinaryTreeTest {
 	 */
 	@Test
 	public void test() {
+		
+		//  600
+		// /   \
+		//424  612
+		// \    /
+		// 499 689
+		//
 		TreeNode root = BinaryTree.integerArray2BinaryTree(new int[] {600,424,612,499,689});
 		
-		BinaryTree.preorderTraversing(root);//600 424 499 612 689 
-		System.out.println();
-		
-		BinaryTree.inorderTraversing(root);//424 499 600 612 689 
-		System.out.println();
-		
-		BinaryTree.postTraversing(root);
+		assertEquals("600,424,499,612,689", BinaryTree.preorderTraversing(root));
+		assertEquals("424,499,600,612,689", BinaryTree.inorderTraversing(root));
+		assertEquals("499,424,689,612,600", BinaryTree.postTraversing(root));
 		
 	}
 	

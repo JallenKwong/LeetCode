@@ -88,40 +88,99 @@ public class BinaryTree {
 	 * 
 	 * @param root
 	 */
-	public static void preorderTraversing(TreeNode root) {
+	public static void printPreorderTraversing(TreeNode root) {
 		if(root == null)
 			return;
 		System.out.print(root.val + " ");
-		inorderTraversing(root.left);
-		inorderTraversing(root.right);
+		preorderTraversing(root.left);
+		preorderTraversing(root.right);
 	}
 	
+	/**
+	 * 前序遍历
+	 * 
+	 * @param root
+	 */
+	public static String preorderTraversing(TreeNode root) {
+		StringBuilder sb = new StringBuilder();
+		preorderTraversing(root, sb);
+		return sb.substring(0, sb.length() - 1);
+	}
 	
+	private static void preorderTraversing(TreeNode node, StringBuilder sb) {
+		if(node == null)
+			return;
+		sb.append(node.val);
+		sb.append(',');
+		preorderTraversing(node.left, sb);
+		preorderTraversing(node.right, sb);
+	}
 	
 	/**
 	 * 中序遍历打印
 	 * 
 	 * @param root
 	 */
-	public static void inorderTraversing(TreeNode root) {
+	public static void printInorderTraversing(TreeNode root) {
 		if(root == null)
 			return;
-		inorderTraversing(root.left);
+		printInorderTraversing(root.left);
 		System.out.print(root.val + " ");
-		inorderTraversing(root.right);
+		printInorderTraversing(root.right);
 	}
+	
+	/**
+	 * 中序遍历
+	 * @param root
+	 * @return
+	 */
+	public static String inorderTraversing(TreeNode root) {
+		StringBuilder sb = new StringBuilder();
+		inorderTraversing(root, sb);
+		return sb.substring(0, sb.length() - 1);
+	}
+	
+	private static void inorderTraversing(TreeNode node, StringBuilder sb) {
+		if(node == null)
+			return;
+		inorderTraversing(node.left, sb);
+		sb.append(node.val);
+		sb.append(',');
+		inorderTraversing(node.right, sb);
+	}
+	
 	
 	/**
 	 * 后序遍历打印
 	 * 
 	 * @param root
 	 */
-	public static void postTraversing(TreeNode root) {
+	public static void printPostTraversing(TreeNode root) {
 		if(root == null)
 			return;
-		inorderTraversing(root.left);
-		inorderTraversing(root.right);
+		printPostTraversing(root.left);
+		printPostTraversing(root.right); 
 		System.out.print(root.val + " ");
+	}
+	
+	/**
+	 * 后序遍历
+	 * @param root
+	 * @return
+	 */
+	public static String postTraversing(TreeNode root) {
+		StringBuilder sb = new StringBuilder();
+		postTraversing(root, sb);
+		return sb.substring(0, sb.length() - 1);
+	}
+	
+	public static void postTraversing(TreeNode node, StringBuilder sb) {
+		if(node == null)
+			return;
+		postTraversing(node.left, sb);
+		postTraversing(node.right, sb);
+		sb.append(node.val);
+		sb.append(',');
 	}
 	
 	/**
