@@ -28,6 +28,17 @@ public class MyUtils {
 	
 	
 	/**
+	 * 检查基本字符数组是否为空
+	 * 
+	 * @param array
+	 * @return
+	 */
+	public static boolean checkArrayEmpty(char[] array) {
+		return array == null || array.length == 0;
+	}
+	
+	
+	/**
 	 * 
 	 * list转换成set
 	 * 
