@@ -254,6 +254,16 @@ tag:字符串
 
 [CharsPermutation](CharsPermutation.java)
 
+## 41. 数据流中的中位数 ##
+
+tag:堆
+
+	如何得到一个数据流中的中位数？
+	如果从数据流中读出奇数值，那么中位数就是所有数值排序之后位于中间的数值。
+	如果从数据流中读出偶数个值，那么中位数就是所有数值排序之后中间两个数的平均值。
+
+[GetMedian](GetMedian.java)
+
 ## 53. 在排序数组中查找数字 ##
 
 tag:二分查找
@@ -345,7 +355,13 @@ PS.**后序遍历**
 
 [CheckTreeBalanced](CheckTreeBalanced.java)
 
+## 64. 求 1+2+...+n ##
 
+tag:编程语言
 
+	求 1+2+...+n，要求不能使用乘除法、
+	for/while/if/else/switch/case等关键字及条件判断语句(A?B:C)
+
+[GetSumHarshly](GetSumHarshly.java)
 
 
