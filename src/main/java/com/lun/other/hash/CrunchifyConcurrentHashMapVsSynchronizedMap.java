@@ -1,4 +1,4 @@
-package com.lun.hash;
+package com.lun.other.hash;
 
 import java.util.Collections;
 import java.util.HashMap;
