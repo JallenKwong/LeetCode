@@ -1,3 +1,13 @@
+## 1. 赋值运算符函数 ##
+
+//涉及C++，暂缓
+
+## 2. 实现Singleton模式 ##
+
+设计一个类，只能生成该类的一个实例。
+
+[Singleton](Singleton.java)
+
 ## 6. 从尾到头打印链表 ##
 
 tag:单向链表
@@ -7,7 +17,6 @@ tag:单向链表
 PS:运用栈或递归方式实现。
 
 [PrintListRecursively](PrintListRecursively.java)
-
 
 ## 7. 重建二叉树 ##
 
