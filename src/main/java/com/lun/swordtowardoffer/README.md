@@ -8,6 +8,27 @@
 
 [Singleton](Singleton.java)
 
+
+## 4. 二维数组中的查找 ##
+
+tag:查找
+
+	在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
+	请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数，若果有，返回其坐标。
+
+[FindNumberInTwoDimensionalIntegerArray](FindNumberInTwoDimensionalIntegerArray.java)
+
+## 5. 替换空格 ##
+
+tag:字符串
+
+	请实现一个函数，把字符串中的每个空格替换成"%20"。
+	例如，输入"We are happy."，则输出“We%20are%20happy.”
+
+PS.字符数，预留好位置，从后到前处理
+
+[ReplaceBlank](ReplaceBlank.java)
+
 ## 6. 从尾到头打印链表 ##
 
 tag:单向链表
@@ -38,6 +59,15 @@ tag:二叉树
 PS.特别地注意数组下标的标注
 
 [ConstructBinaryTree](ConstructBinaryTree.java)
+
+## 9. 用两个栈实现队列 ##
+
+tag:栈 队列
+
+	用两个栈实现队列，实现appendTail和deleteHead，
+	分别完成在队列尾部插入节点和在队列头部删除节点功能。
+
+
 
 ## 10. 斐波那契数列 ##
 
@@ -70,6 +100,13 @@ tag.链表
 	这个链表的倒数第3个节点是值为4的节点。
 
 [FindKthToTail](FindKthToTail.java)
+
+## 25. 合并两个排序的链表 ##
+
+tag:链表
+
+	输入两个递增排序的链表，合并这两个链表并使新链表中的节点仍然是递增排序的。
+
 
 ## 27. 二叉树的镜像 ##
 

@@ -33,7 +33,6 @@ public class Singleton {
 		}
 	}
 	
-	
 	//3.懒汉式（延迟加载方式）（线性安全）
 	public static class Singleton3 {
 		private static Singleton3 instance;

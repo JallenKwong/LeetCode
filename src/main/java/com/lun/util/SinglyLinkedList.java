@@ -38,7 +38,7 @@ public class SinglyLinkedList {
 	
 	/**
 	 * 
-	 * 判断两条单向
+	 * 判断两条单向链表是否相同
 	 * 
 	 * @param list1
 	 * @param list2
