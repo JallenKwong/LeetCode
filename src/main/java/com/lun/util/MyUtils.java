@@ -37,6 +37,15 @@ public class MyUtils {
 		return array == null || array.length == 0;
 	}
 	
+	/**
+	 * 检测字符串是否为空
+	 * 
+	 * @return
+	 */
+	public static boolean checkStringEmpty(String str) {
+		return str == null || str.trim().isEmpty();
+	}
+	
 	
 	/**
 	 * 
