@@ -36,11 +36,20 @@
 		    <version>1.7.25</version>
 		    <scope>test</scope>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/cglib/cglib -->
+		<dependency>
+		    <groupId>cglib</groupId>
+		    <artifactId>cglib</artifactId>
+		    <version>3.2.10</version>
+		</dependency>
+
 		
 	</dependencies>
 
 	<build>
 		<finalName>LeetCode</finalName>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -51,6 +60,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
 	</build>
 
 
