@@ -21,9 +21,14 @@ targetFile.write(">不积跬步，无以至千里。    ——荀子《劝学》
 targetFile.write("# Sword Toward Offer #\n\n")
 targetFile.write("[Sword Toward Offer](src/main/java/com/lun/swordtowardoffer/)\n\n")
 
+targetFile.write("# Understanding the JVM #\n\n")
+targetFile.write("[Understanding the JVM](src/main/java/com/lun/other/jvm/)\n\n")
+
+targetFile.write("# LeetCode #\n\n")
+
 for d in dirs:
     
-    targetFile.write("# " + d.upper() + " #\n\n")
+    targetFile.write("## " + d.upper() + " ##\n\n")
 
     dirs2 = os.listdir(srcDir + d)
 
@@ -54,7 +59,7 @@ total = 0
 for num in counts:
     total = total + num
 
-targetFile.write("# SUM UP #\n\n")
+targetFile.write("## SUM UP ##\n\n")
 targetFile.write("Total|Easy|Medium|Hard\n")
 targetFile.write("---|---|---|---\n")
 targetFile.write("%d|%d|%d|%d\n\n" % (total, counts[0], counts[1], counts[2]))

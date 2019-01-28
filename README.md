@@ -4,7 +4,13 @@
 
 [Sword Toward Offer](src/main/java/com/lun/swordtowardoffer/)
 
-# EASY #
+# Understanding the JVM #
+
+[Understanding the JVM](src/main/java/com/lun/other/jvm/)
+
+# LeetCode #
+
+## EASY ##
 
 - [BinaryTreePaths](src/main/java/com/lun/easy/BinaryTreePaths.md) --- [Solution Code](src/main/java/com/lun/easy/BinaryTreePaths.java) --- Tree, Depth-first Search
 
@@ -13,6 +19,9 @@
 
 
 - [DesignHashSet](src/main/java/com/lun/easy/DesignHashSet.md) --- [Solution Code](src/main/java/com/lun/easy/DesignHashSet.java) --- Hash Table, Design
+
+
+- [MergeTwoSortedLists](src/main/java/com/lun/easy/MergeTwoSortedLists.md) --- [Solution Code](src/main/java/com/lun/easy/MergeTwoSortedLists.java) --- LinkedList
 
 
 - [MinimumAbsoluteDifferenceInBST](src/main/java/com/lun/easy/MinimumAbsoluteDifferenceInBST.md) --- [Solution Code](src/main/java/com/lun/easy/MinimumAbsoluteDifferenceInBST.java) --- Binary Search Tree
@@ -24,7 +33,7 @@
 - [RotateArray](src/main/java/com/lun/easy/RotateArray.md) --- [Solution Code](src/main/java/com/lun/easy/RotateArray.java) --- Array
 
 
-# MEDIUM #
+## MEDIUM ##
 
 - [BoatsToSavePeople](src/main/java/com/lun/medium/BoatsToSavePeople.md) --- [Solution Code](src/main/java/com/lun/medium/BoatsToSavePeople.java) --- Two Pointers, Greedy
 
@@ -56,7 +65,7 @@
 - [ThreeSumWithMultiplicity](src/main/java/com/lun/medium/ThreeSumWithMultiplicity.md) --- [Solution Code](src/main/java/com/lun/medium/ThreeSumWithMultiplicity.java) --- Two Pointers
 
 
-# HARD #
+## HARD ##
 
 - [BestTimeToBuyAndSellStockIII](src/main/java/com/lun/hard/BestTimeToBuyAndSellStockIII.md) --- [Solution Code](src/main/java/com/lun/hard/BestTimeToBuyAndSellStockIII.java) --- Dynamic Programming, Array
 
@@ -70,9 +79,9 @@
 - [WordBreakII](src/main/java/com/lun/hard/WordBreakII.md) --- [Solution Code](src/main/java/com/lun/hard/WordBreakII.java) --- Dynamic Programming, Backtracking, Depth-first Search
 
 
-# SUM UP #
+## SUM UP ##
 
 Total|Easy|Medium|Hard
 ---|---|---|---
-20|6|10|4
+21|7|10|4
 
