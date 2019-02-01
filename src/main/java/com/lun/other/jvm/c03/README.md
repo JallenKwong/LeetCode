@@ -50,6 +50,8 @@ GC在堆进行回收前，第一件事就是要哪些对象是“活”的，哪
 
 PS. 上例没有main方法，另外程序例子运行后如何生成GC日志暂未说明，GC日志内容也未说明。
 
+PS. [理解GC日志](#理解gc日志)
+
 ### 可达性分析算法 ###
 
 Reachability Analysis/əˈnælɪsɪs/
@@ -322,7 +324,7 @@ JVM规范对垃圾收集器应该如何实现并没有任何规定，因此不�
 
 明确一点：**虽然是在对各个GC进行比较，但并非为了挑出了一个最好的GC。因为直到现在为止还没有最好的GC出现，更加没有万能的GC，所以我们选择的只是对具体应用最合适的GC**。这点不需要多加解释就能证明：如果有一种放之四海而皆准、任何场景都适用的完美的GC存在，那HotSpot VM就没必要实现那么多不同的GC了。
 
-### Serial收集器 ###
+### Serial ###
 
 它是JDK 1.3之前是VM**新生代**收集的唯一选择。
 
@@ -354,7 +356,7 @@ Serial收集器实属鸡肋
 
 所以，**Serial收集器对于运行在Client模式下的VM来说是一个很好的选择**。
 
-### ParNew收集器 ###
+### ParNew ###
 
 ParNew收集器其实就是Serial收集器的多线程版本。
 
@@ -391,7 +393,7 @@ ParNew收集器在单CPU的环境中绝对不会有比Serial收集器更好的�
 >并发Concurrent/kənˈkɜ:rənt/ 指用户线程与垃圾收集线程**同时**执行(但不一定是并行的，可能会交替执行)，用户程序在继续运行，而垃圾收集程序运行于另一个CPU上。
 
 
-### Parallel Scavenge收集器 ###
+### Parallel Scavenge ###
 
 **新生代收集器**
 
@@ -437,7 +439,7 @@ Parallel Scavenge收集器提供了两个参数用于精确控制吞吐量，分
 
 只需要把基本的内存数据设置好（如-Xmx设置最大堆），然后使用MaxGCPauseMillis参数（更关注最大停顿时间）或GCTimeRatio（更关注吞吐量）参数给虚拟机设立一个优化目标，那具体细节参数的调节工作就由虚拟机完成了。**自适应调节策略也是Parallel Scavenge收集器与ParNew收集器的一个重要区别**。
 
-### Serial Old收集器 ###
+### Serial Old ###
 
 Serial Old是Serial收集器的老年代版本，它同样是单线程收集器，使用“标记-整理”算法。这个收集器的主要意义也是在于给Client模式下的虚拟机使用。
 
@@ -448,7 +450,7 @@ Serial Old是Serial收集器的老年代版本，它同样是单线程收集器�
 
 ![Serial/SerialOld](image/Serial-and-SerialOld.png)
 
-### Parallel Old 收集器 ###
+### Parallel Old ###
 
 Parallel Old是Parallel Scavenge收集器的老年代版本，使用多线程和“标记－整理”算法。
 
@@ -462,7 +464,7 @@ Parallel Old是Parallel Scavenge收集器的老年代版本，使用多线程和
 
 ![Parallel Scavenge/Parallel Old](image/ParallelScavenge-And-ParallelOld.png)
 
-### CMS收集器 ###
+### CMS ###
 
 CMS(Concurrent Mark Sweep)收集器时一种以获取**最短回收停顿时间为目标**的收集器。
 
@@ -515,7 +517,7 @@ Sun的一些官方文档里面也称之为并发低停顿收集器（Concurrent 
 
 为了解决这个问题，CMS收集器提供了一个-XX:+UseCMSCompactAtFullCollection开关参数，用于在“享受”完Full GC服务之后额外免费附送一个碎片整理过程，内存整理的过程是无法并发的。空间碎片问题没有了，但停顿时间不得不变长了。虚拟机设计者们还提供了另外一个参数-XX: CMSFullGCsBeforeCompaction，这个参数用于设置在执行多少次不压缩的Full GC后，跟着来一次带压缩的。
 
-### G1收集器 ###
+### G1 ###
 
 **G1（Garbage-First）收集器是当今收集器技术发展的最前沿成果之一**，早在JDK 1.7刚刚确立项目目标，Sun公司给出的JDK 1.7 RoadMap里面，它就被视为JDK 1.7中HotSpot虚拟机的一个重要进化特征。从JDK 6u14中开始就有Early Access版本的G1收集器供开发人员实验、试用，由此开始G1收集器的“Experimental”状态持续了数年时间，直至JDK 7u4，Sun公司才认为它达到足够成熟的商用程度，移除了“Experimental”的标识。
 
@@ -628,6 +630,8 @@ Sun给出的Benchmark的执行硬件为Sun V880服务器（8×750MHz UltraSPARC 
 
 ### GC小结 ###
 
+//TODO:生成索引后，填补链接地址
+
 <table>
 
 <tr>
@@ -635,66 +639,66 @@ Sun给出的Benchmark的执行硬件为Sun V880服务器（8×750MHz UltraSPARC 
 <td>描述</td>
 <td>所处区域</td>
 <td>可搭配合作的GC</td>
-<td>优点</td>
-<td>缺点</td>
+<td>特点</td>
+<td>相关参数(不完全)</td>
 </tr>
 
 <tr>
 <td><a href=''>Serial</a></td>
-<td></td>
+<td>单线程的收集器，垃圾收集时，需暂停所有工作线程</td>
 <td rowspan=3>Young<br>新生代</td>
 <td>CMS、Serial Old</td>
-<td></td>
+<td>1.停掉所有工作线程进行垃圾收集，用户体验良好度下降<br>2.“鸡肋”<br>3.简单、高效，但在Client模式下的默认新生代收集器</td>
 <td></td>
 </tr>
 
 <tr>
 <td><a href=''>ParNew</a></td>
-<td></td>
+<td>Serial多线程版本</td>
 <td>CMS、Serial Old</td>
-<td></td>
-<td></td>
+<td>ParNew在单CPU环境绝对不会有比Serial有更好的效果</td>
+<td>UseConcMarkSweepGC、UseParallelGC、ParallelGCThreads</td>
 </tr>
 
 <tr>
 <td><a href=''>Parallel Scavenge</a></td>
-<td></td>
+<td>“吞吐量优先”收集器，高吞吐量可高效地利用CPU时间</td>
 <td>Serial Old、Parallel Old</td>
-<td></td>
-<td></td>
+<td>拥有GC自适应调节策略</td>
+<td>UseAdaptiveSizePolicy、GCTimeRatio、MaxGCPauseMillis</td>
 </tr>
 
 <tr>
 <td><a href=''>Serial Old</a></td>
-<td></td>
+<td>Serial的老年代版本</td>
 <td rowspan=3>Tenured<br>老年代</td>
 <td>CMS、Serial、ParNew、Parallel Scavenge</td>
-<td></td>
+<td>主要意义给Client模式的VM使用</td>
 <td></td>
 </tr>
 
 <tr>
-<td><a href=''>Parallel old</a></td>
-<td></td>
+<td><a href=''>Parallel Old</a></td>
+<td>Parallel Scavenge的老年代版本</td>
 <td>Parallel Scavenge</td>
-<td></td>
+<td>与Parallel Scavenge组合使用，特别适合在注重吞吐量以及CPU资源敏感的场合</td>
 <td></td>
 </tr>
 
 <tr>
-<td><a href=''>CMS</a></td>
-<td></td>
+<td><a href=''>CMS(Concurrent Mark Sweep)</a></td>
+<td>一种以获取最短回收停顿时间为目标的收集器。</td>
 <td>Serial、ParNew</td>
-<td></td>
-<td></td>
+<td>1.对CPU资源非常敏感<br>2.无法处理浮动垃圾<br>3.可能造成过多的空间碎片</td>
+<td>CMSInitiatingOccupancyFraction、UseCMSCompactAtFullCollection、CMSFullGCsBeforeCompaction</td>
 </tr>
 
 <tr>
 <td><a href=''>G1</a></td>
-<td></td>
+<td>当今收集器技术发展的最前沿成果之一。</td>
 <td>Young & Tenured</td>
 <td>无</td>
-<td></td>
+<td>初来乍到、能力有待考验</td>
 <td></td>
 </tr>
 
@@ -723,5 +727,81 @@ UseCMSCompactAtFullCollection|设置CMS 收集器在完成垃圾收集后是否�
 CMSFullGCsBeforeCompaction|设置CMS 收集器在进行若干次垃圾收集后再启动一次内存碎片整理。仅在使用CMS 收集器时生效
 
 ## 内存分配与回收策略 ##
+
+Java技术体系中所提倡的自动内存管理最终可以归结为自动化地解决了两个问题：
+1. 给对象分配内存
+2. 回收分配给对象的内存。
+
+对象的内存分配，往大方向讲，就是在**堆上**分配（但也可能经过JIT编译后被拆散为标量类型并间接地栈上分配），对象主要分配在**新生代**的Eden区上，如果启动了本地线程分配缓冲，将按线程优先在TLAB上分配。
+
+少数情况下也可能会直接分配在**老年代**中，分配的规则并不是百分之百固定的，其细节取决于当前使用的是哪一种垃圾收集器组合，还有虚拟机中与内存相关的参数的设置。
+
+接下来将会讲解几条最普遍的内存分配规则，并通过代码去验证这些规则。
+
+本节下面的代码在测试时使用Client模式虚拟机运行，没有手工指定收集器组合，换句话说，验证的是在使用Serial/Serial Old收集器下（ParNew/Serial Old收集器组合的规则也基本一致）的内存分配和回收的策略。
+
+### 对象优先在Eden分配 ###
+
+大多数情况下，对象在新生代Eden区中分配。当Eden区没有足够空间进行分配时，虚拟机将发起一次Minor GC。
+
+虚拟机提供了**-XX：+PrintGCDetails**这个收集器日志参数，**告诉虚拟机在发生垃圾收集行为时打印内存回收日志，并且在进程退出的时候输出当前的内存各区域分配情况**。在实际应用中，内存回收日志一般是打印到文件后通过日志工具进行分析，不过本实验的日志并不多，直接阅读就能看得很清楚。
+
+[TestAllocation](TestAllocation.java)
+
+代码的testAllocation（）方法中，尝试分配3个2MB大小和1个4MB大小的对象，
+
+#### VM参数说明 ####
+
+在运行时通过**-Xms20M、-Xmx20M、-Xmn10M**这3个参数限制了Java堆大小为20MB，不可扩展，其中10MB分配给新生代，剩下的10MB分配给老年代。
+
+**-XX：SurvivorRatio=8**决定了新生代中Eden区与一个Survivor区的空间比例是8:1，从输出的结果也可以清晰地看到“**eden space 8192K、from space 1024K、to space 1024K**”的信息，新生代总可用空间为9216KB（Eden区+1个Survivor区的总容量）。
+
+#### 程序运行结果解释 ####
+
+![](image/result1.png)
+
+执行testAllocation（）中分配allocation4对象的语句时会发生一次Minor GC，这次GC的结果是新生代6651KB变为148KB，而总内存占用量则几乎没有减少（因为allocation1、allocation2、allocation3三个对象都是存活的，VM几乎没有找到可回收的对象）。
+
+这次GC发生的原因是给allocation4分配内存的时候，发现Eden已经被占用了6MB，剩余空间已不足以分配allocation4所需的4MB内存，因此发生Minor GC。GC期间虚拟机又发现已有的3个2MB大小的对象全部无法放入Survivor空间（Survivor空间只有1MB大小），**所以只好通过分配担保机制提前转移到老年代去**。
+
+这次GC结束后，4MB的allocation4对象顺利分配在Eden中，因此程序执行完的结果是Eden占用4MB（被allocation4占用），Survivor空闲，老年代被占用6MB（被allocation1、allocation2、allocation3占用）。通过GC日志可以证实这一点。
+
+#### 新生代GC与老年代GC区别 ####
+
+**新生代GC（Minor GC）**：指发生在新生代的垃圾收集动作，因为Java对象大多都具备朝生夕灭的特性，所以Minor GC非常频繁，一般回收速度也比较快。
+
+**老年代GC（Major GC/Full GC）：**指发生在老年代的GC，出现了Major GC，经常会伴随至少一次的Minor GC（但非绝对的，在Parallel Scavenge收集器的收集策略里就有直接进行Major GC的策略选择过程）。Major 的速度一般会比Minor GC慢10倍以上。
+
+### 大对象直接进入老年代 ###
+
+**大对象**是指，需要大量连续内存空间的Java对象，最典型的大对象就是那种很长的字符串以及数组（列出的例子中的byte[]数组就是典型的大对象）。
+
+**大对象对VM的内存分配来说就是一个坏消息**（替JVM抱怨一句，比遇到一个大对象更加坏的消息就是遇到一群“朝生夕灭”的“短命大对象”，写程序的时候应当避免），经常出现大对象容易导致内存还有不少空间时就提前触发垃圾收集以获取足够的连续空间来“安置”它们。
+
+JVM提供了一个**-XX：PretenureSizeThreshold**参数，令大于这个设置值的对象直接在老年代分配。这样做的目的是避免在Eden区及两个Survivor区之间发生大量的内存复制（新生代采用**复制算法**收集内存）。
+
+>tenure/ˈtenyər/ v.give (someone) a permanent post, especially as a teacher or professor.
+
+[TestPretenureSizeThreshold](TestPretenureSizeThreshold.java)
+
+#### 程序运行结果解释 ####
+
+![](image/result2.png)
+
+执行代码中的testPretenureSizeThreshold()方法后，我们看到Eden空间几乎没有被使用，而老年代的10MB空间被使用了40%，**也就是4MB的allocation对象直接就分配在老年代中，这是因为PretenureSizeThreshold被设置为3MB**（就是3145728，这个参数不能像-Xmx之类的参数一样直接写3MB），因此超过3MB的对象都会直接在老年代进行分配。
+
+注意PretenureSizeThreshold参数只对Serial和ParNew两款收集器有效，Parallel Scavenge收集器不认识这个参数，Parallel Scavenge收集器一般并不需要设置。如果遇到必须使用此参数的场合，可以考虑ParNew加CMS的收集器组合。
+
+### 长期存活的对象将进入老年代 ###
+
+### 动态对象年龄判定 ###
+
+### 空间分配担保 ###
+
+## 本章小结 ##
+
+内存回收与垃圾收集器在很多时候都是影响系统性能、并发能力的主要因素之一，虚拟机之所以提供多种不同的收集器以及提供大量的调节参数，是因为只有根据实际应用需求、实现方式选择最优的收集方式才能获取最高的性能。
+
+没有固定收集器、参数组合，也没有最优的调优方法，VM也就没有什么必然的内存回收行为。因此，学习VM内存知识，如果要到实践调优阶段，那么必须了解每个具体收集器的行为、优势和劣势、调节参数。
 
 
