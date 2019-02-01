@@ -784,7 +784,7 @@ JVM提供了一个**-XX：PretenureSizeThreshold**参数，令大于这个设置
 
 [TestPretenureSizeThreshold](TestPretenureSizeThreshold.java)
 
-#### 程序运行结果解释 ####
+#### 程序运行结果解分析 ####
 
 ![](image/result2.png)
 
@@ -794,7 +794,36 @@ JVM提供了一个**-XX：PretenureSizeThreshold**参数，令大于这个设置
 
 ### 长期存活的对象将进入老年代 ###
 
+**既然VM采用了分代收集的思想来管理内存，那么内存回收时就必须能识别哪些对象应放在新生代，哪些对象应放在老年代中**。
+
+为了做到这点，虚拟机给每个对象定义了一个对象年龄（Age）计数器。如果对象在Eden出生并经过第一次Minor GC后仍然存活，并且能被Survivor容纳的话，将被移动到Survivor空间中，并且对象年龄设为1。对象在Survivor区中每“熬过”一次Minor GC，年龄就增加1岁，当它的年龄增加到一定程度（默认为15岁），就将会被晋升到老年代中。对象晋升老年代的年龄阈值，可以通过参数**-XX：MaxTenuringThreshold**设置。
+
+[TestTenuringThreshold](TestTenuringThreshold.java)
+
+#### 程序运行结果解分析 ####
+
+分别以-XX：MaxTenuringThreshold=1和-XX：MaxTenuringThreshold=15两种设置来执行代码中的testTenuringThreshold()方法，此方法中的allocation1对象需要256KB内存，Survivor空间可以容纳。
+
+以MaxTenuringThreshold=1参数来运行的结果
+
+![](image/result3.png)
+
+当MaxTenuringThreshold=1时，allocation1对象在第二次GC发生时进入老年代，新生代已使用的内存GC后非常干净地变成0KB。
+
+---
+
+以MaxTenuringThreshold=15参数来运行的结果
+
+![](image/result4.png)
+
+而MaxTenuringThreshold=15时，第二次GC发生后，allocation1对象则还留在新生代Survivor空间，这时新生代仍然有404KB被占用。
+
 ### 动态对象年龄判定 ###
+
+为了能更好地适应不同程序的内存状况，**VM并不是永远地要求对象的年龄必须达到了MaxTenuringThreshold才能晋升老年代**，如果在Survivor空间中相同年龄所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代，无须等到MaxTenuringThreshold中要求的年龄。
+
+执行代码的testTenuringThreshold2（）方法，并设置-XX： 
+MaxTenuringThreshold=15，会发现运行结果中Survivor的空间占用仍然为0%，而老年代比预期增加了6%，也就是说，allocation1、allocation2对象都直接进入了老年代，而没有等到15岁的临界年龄。因为这两个对象加起来已经到达了512KB，并且它们是同年的，满足同年对象达到Survivor空间的一半规则。我们只要注释掉其中一个对象new操作，就会发现另外一个就不会晋升到老年代中去了。
 
 ### 空间分配担保 ###
 
