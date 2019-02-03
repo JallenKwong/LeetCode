@@ -4,7 +4,7 @@
 
 import re
 
-chapterName = 'c02'
+chapterName = 'c03'
 
 fileName = chapterName + '\README.md'
 
@@ -14,6 +14,8 @@ textFile = open(fileName, 'r')
 counterList = [0] * 6
 
 indexRegex = re.compile(r'^#+ (.*) #+$')
+
+illegalChar = [u'：', ' ', '(', ')', '-']
 
 def count(line):
     def coreCount(line, num):
@@ -59,6 +61,14 @@ for line in textFile.readlines():
         href = indexName.lower()
 
         prefix = ''
+
+        #去除非法字符
+
+        for char in illegalChar:
+            if char in href:
+                #注意！字符串是不可变对象，replace生成新的字符串，而不改变原有对象
+                href = href.replace(char, '')
+                
 
         for i in range(1, 6):
             if counterList[i] == 0:
