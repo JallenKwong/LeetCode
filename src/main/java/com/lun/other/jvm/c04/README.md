@@ -191,17 +191,52 @@ option选项的合法值与具体含义
 
 [查看线程状况的JSP页面](jstack.jsp)
 
-
 //TODO:HSDIS
 ### HSDIS : JIT生成代码反汇编 ###
 
-**在JVM规范中,详细描述了虚拟机指令集中每条指令的执行过程、执行前后对操作数栈、局部变量表的影响等细节**。这些细节描述与Sun的早期虚拟机( Sun Classic VM)高度吻合 ,但随着技术的发展,高性能虚拟机真正的细节实现方式已经渐渐与虚拟机规范所描述的内容产生了越来越大的差距,虚拟机规范中的描述逐渐成了虚拟机实现的“概念模型”— 即实现只能保证规范描述等效。基于这个原因,我们分析程序的执行语义问题(虚拟机做了什么)时 ,在字节码层面上分析完全可行,但分析程序的执行行为问题(虚拟机是怎样做的、性能如何)时 ,在字节码层面上分析就没有什么意义了,需要通过其他方式解决。
+**在JVM规范中，详细描述了虚拟机指令集中每条指令的执行过程、执行前后对操作数栈、局部变量表的影响等细节**。这些细节描述与Sun的早期虚拟机( Sun Classic VM)高度吻合 ，但随着技术的发展，高性能虚拟机真正的细节实现方式已经渐渐与虚拟机规范所描述的内容产生了越来越大的差距，虚拟机规范中的描述逐渐成了虚拟机实现的“概念模型”— 即实现只能保证规范描述等效。基于这个原因，我们分析程序的执行语义问题(**虚拟机做了什么**)时 ，在字节码层面上分析完全可行，但分析程序的执行行为问题(**虚拟机是怎样做的、性能如何**)时 ，在字节码层面上分析就没有什么意义了，需要通过其他方式解决。
 
-分析程序如何执行,通过软件调试工具(GDB、Windbg等 )来断点调试是最常见的手段 ,但是这样的调试方式在Java虚拟机中会遇到很大困难,因为大量执行代码是通过JIT编译器动态生成到CodeBuffer中的 ,没有很简单的手段来处理这种混合模式的调试(不过相信虚拟机开发团队内部肯定是有内部工具的)。因此,不得不通过一些特别的手段来解决问题, 基于这种背景,本节的主角——HSDIS插件就正式登场了。
+**分析程序如何执行**，通过软件调试工具(GDB、Windbg等 )来断点调试是最常见的手段 ，但是这样的调试方式在Java虚拟机中会遇到很大困难，因为大量执行代码是通过JIT编译器动态生成到CodeBuffer中的 ，没有很简单的手段来处理这种混合模式的调试(不过相信虚拟机开发团队内部肯定是有内部工具的)。因此，不得不通过一些特别的手段来解决问题， 基于这种背景，本节的主角——HSDIS插件就正式登场了。
 
-HSDIS是一个Sun官方推荐的HotSpot虚拟机JIT编译代码的反汇编插件,它包含在HotSpot虚拟机的源码之中,但没有提供编译后的程序。在Project Kerni的网站也可以下载到单独的源码。它的作用是让HotSpot的-XX : +PrintAssembly指令调用它来把动态生成的本地代码还原为汇编代码输出,同时还生成了大量非常有价值的注释,这样我们就可以通过输出的代码来分析问题。读者可以根据自己的操作系统和CPU类型从Project Kenai的网站上下载编译好的插件,直接放到JDK_HOME/jre/bin/client和JDK_HOME/jre/bin/server目录中即可。如果没 有找到所需操作系统(譬如Windows的就没有 )的成品 ,那就得自己使用源码编译一下。
+HSDIS是一个Sun官方推荐的HotSpot虚拟机JIT编译代码的反汇编插件，它包含在HotSpot虚拟机的源码之中，但没有提供编译后的程序。在Project Kerni的网站也可以下载到单独的源码。**它的作用是让HotSpot的-XX : +PrintAssembly指令调用它来把动态生成的本地代码还原为汇编代码输出，同时还生成了大量非常有价值的注释，这样我们就可以通过输出的代码来分析问题**。读者可以根据自己的操作系统和CPU类型从Project Kenai的网站上下载编译好的插件，直接放到JDK_HOME/jre/bin/client和JDK_HOME/jre/bin/server目录中即可。如果没有找到所需操作系统(譬如Windows的就没有 )的成品 ，那就得自己使用源码编译一下。
 
-还需要注意的是,如果读者使用的是Debug或者FastDebug版的HotSpot ,那可以直接通过-XX : +PrintAssembly指令使用插件;如果使用的是Product版的HotSpot , 那还要额外加入一个-XX : +UnlockDiagnosticVMOptions参数。笔者以代码清单4-6中的简单测试代码为例演示一下这个插件的使用。
+还需要注意的是，如果读者使用的是**Debug或者FastDebug版**的HotSpot，那可以直接通过-XX : +PrintAssembly指令使用插件;如果使用的是**Product版**的HotSpot，那还要额外加入一个-XX : +UnlockDiagnosticVMOptions参数。
+
+---
+
+事先要有jdk1.8.xxx\jre\bin\server\hsdis-amd64.dll文件[下载链接](https://github.com/doexit/hsdis.dll)
+
+用简单测试代码为例演示一下这个插件的使用。
+
+[Bar](Bar.java)
+
+编译这段代码
+
+	javac Bar.java
+
+然后执行命令（在JDK 1.8环境下）
+
+	java -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:+PrintAssembly -Xcomp -XX:CompileCommand=dontinline,*Bar.sum -XX:CompileCommand=compileonly,*Bar.sum test.Bar
+
+其中 ,参数-Xcomp是让虚拟机以编译模式执行代码,这样代码可以“偷懒”,不需要执行足够次数来预热就能触发JIT编译。两个-XX : CompileCommand意思是让编译器不要内联sum()并且只编译sum() , -XX : +PrintAssembly就是输出反汇编内容。
+
+输出的部分结果
+
+![](image/hsdis1.png)
+
+书上的结果：
+
+![](image/hsdis2.png)
+
+## JDK可视化工具 ##
+
+
+
+
+
+
+
+
 
 
 
