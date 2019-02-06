@@ -4,7 +4,7 @@
 
 import re
 
-chapterName = 'c03'
+chapterName = 'c04'
 
 fileName = chapterName + '\README.md'
 
@@ -15,7 +15,7 @@ counterList = [0] * 6
 
 indexRegex = re.compile(r'^#+ (.*) #+$')
 
-illegalChar = [u'：', ' ', '(', ')', '-']
+illegalChar = [u'：', ' ', '(', ')', '-', u'、', ':']
 
 def count(line):
     def coreCount(line, num):
