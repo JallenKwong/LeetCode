@@ -15,7 +15,7 @@ counterList = [0] * 6
 
 indexRegex = re.compile(r'^#+ (.*) #+$')
 
-illegalChar = [u'：', ' ', '(', ')', '-', u'、', ':']
+illegalChar = [u'：', ' ', '(', ')', '-', u'、', ':', '.']
 
 def count(line):
     def coreCount(line, num):
