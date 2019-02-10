@@ -562,6 +562,181 @@ length值说明了这个UTF-8编码的字符串长度是多少字节，它后面
 
 ### 访问标志 ###
 
+在常量池结束之后，紧接着的两个字节代表访问标志（**access_flags**），这个标志用于识别一些类或者接口层次的访问信息，包括：
+
+1. **这个Class是类还是接口**；
+2. 是否定义为public类型；
+3. 是否定义为abstract类型；
+4. 如果是类的话，是否被声明为final；
+5. 。。。
+
+---
+
+**访问标志**
+
+标志名称|标志值|含义
+---|---|---
+ACC_PUBLIC|0x0001|是否为public类型
+ACC_FINAL|0x0010|是否被声明为final，只有类可以设置
+ACC_SUPER|0x0020|是否允许使用invokespecial字节码指令的新语义，invokespecial指令的语意在JDK1.0.2发生过改变，为了区别这条指令使用哪种语意，JDK1.0.2之后编译出来的类的这个标志默认为真
+ACC_INTERFACE|0x0200|标志这是一个接口
+ACC_ABSTRACT|0x0400|是否为abstract类型，对于接口或者抽象类来说，次标志值为真，其他类型为假
+ACC_SYNTHETIC|0x1000|标志这个类并非由用户代码产生
+ACC_ANNOTATION|0x2000|标志这是一个注解
+ACC_ENUM|0x4000|标志这是一个枚举
+
+---
+
+access_flags中一共有16个标志位可以使用，当前只定义了其中8个，没有使用到的标志位要求一律为0。
+
+以[TestClass](TestClass.java)的代码为例，TestClass是一个普通Java类，不是接口、枚举或者注解，被public关键字修饰但没有被声明为final和abstract，并且它使用了JDK 1.2之后的编译器进行编译，
+
+因此它的ACC_PUBLIC、ACC_SUPER标志应当为真，而ACC_FINAL、ACC_INTERFACE、ACC_ABSTRACT、ACC_SYNTHETIC、ACC_ANNOTATION、ACC_ENUM这6个标志应当为假，因此它的access_flags的值应为：0x0001|0x0020=0x0021。
+
+从下图中可以看出，access_flags标志（偏移地址：0x000000F3）的确为0x0021。
+
+![](image/access_flags.png)
+
+### 类索引、父类索引与接口索引集合 ###
+
+**类索引**（this_class）和**父类索引**（super_class）都是一个u2类型的数据，而**接口索引集合**（interfaces）是一组u2类型的数据的集合，**Class文件中由这三项数据来确定这个类的继承关系**。
+
+**类索引**用于确定这个类的全限定名，**父类索**引用于确定这个类的父类的全限定名。由于Java语言不允许多重继承，所以父类索引只有一个，除了java.lang.Object之外，所有的Java类都有父类，因此除了java.lang.Object外，所有Java类的父类索引都不为0。
+
+**接口索引集合**就用来描述这个类实现了哪些接口，这些被实现的接口将按implements语句（如果这个类本身是一个接口，则应当是extends语句）后的接口顺序从左到右排列在接口索引集合中。
+
+类索引、父类索引和接口索引集合都按顺序排列在访问标志之后，类索引和父类索引用两个u2类型的索引值表示，它们各自指向一个类型为CONSTANT_Class_info的类描述符常量，通过CONSTANT_Class_info类型的常量中的索引值可以找到定义在CONSTANT_Utf8_info类型的常量中的全限定名字符串。下图演示了代码的代码的类**索引查找过程**。
+
+![](image/trace.png)
+
+---
+
+对于接口索引集合，入口的第一项——u2类型的数据为接口计数器（interfaces_count），表示索引表的容量。如果该类没有实现任何接口，则该计数器值为0，后面接口的索引表不再占用任何字节。代码中的访问标志、类索引、父类索引与接口表索引的内容如下图所示。 
+
+![](image/class-interfaces.png)
+
+从偏移地址0x000000F5开始的3个u2类型的值分别为0x0001、0x0003、0x0000，也就是类索引为1，父类索引为3，接口索引集合大小为0。
+
+查询前面javap命令计算出来的常量池，找出对应的类和父类的常量，结果如下面代码所示。
+
+	...
+	Constant pool:
+	   #1 = Class              #2             // com/lun/other/jvm/c06/TestClass
+	   #2 = Utf8               com/lun/other/jvm/c06/TestClass
+	   #3 = Class              #4             // java/lang/Object
+	   #4 = Utf8               java/lang/Object
+	...
+
+### 字段表集合 ###
+
+字段表（field_info）用于描述接口或者类中声明的变量。字段（field）包括**类级变量**以及**实例级变量**，但**不包括**在方法内部声明的局部变量。
+
+在Java中描述一个字段可以包括的信息有：
+
+1. 字段的作用域（public、private、protected修饰符）
+2. 是实例变量还是类变量（static修饰符）
+3. 可变性（final）
+4. 并发可见性（volatile修饰符，是否强制从主内存读写）
+5. 可否被序列化（transient修饰符）
+6. 字段数据类型（基本类型、对象、数组）
+7. 字段名称。
+
+上述这些信息中，各个修饰符都是布尔值，要么有某个修饰符，要么没有，很适合使用标志位来表示。而字段叫什么名字、字段被定义为什么数据类型，这些都是无法固定的，**只能引用常量池中的常量来描述**
+
+---
+
+**字段表结构**
+
+类型|名称|数量
+---|---|---
+u2|access_flags|1
+u2|name_index|1
+u2|descriptor_index|1
+u2|attributes_count|1
+attribute_info|attributes|attributes_count
+
+字段修饰符放在access_flags项目中，他与类中的access_flags项目是非常类似的，都是一个u2的数据类型，其中可以设置的标志位和含义见下表。
+
+**字段访问标志 access_flags**
+
+标志名称|标志值|含义
+---|---|---
+ACC_PUBLIC|0x0001|字段是否public
+ACC_PRIVATE|0x0002|字段是否private
+ACC_PROTECTED|0x0004|字段是否protected
+ACC_STATIC|0x0008|字段是否static
+ACC_FINAL|0x0010|字段是否final
+ACC_VOLATILE|0x0040|字段是否volatile
+ACC_TRANSIENT|0x0080|字段是否transient
+ACC_SYNTHETIC|0x1000|字段是否由编译器自动产生的
+ACC_ENUM|0x4000|字段是否enum
+
+很明显，在实际情况中，ACC_PUBLIC、ACC_PRIVATE、ACC_PROTECTED三个标志最多只能选择其一，ACC_FINAL、ACC_VOLATILE不能同时选择。接口之中的字段必须有ACC_PUBLIC、ACC_STATIC、ACC_FINAL标志，**这些都是由Java本身的语言规则所决定的**。
+
+根据access_flags标志的是两项索引值：name_index和descriptor_index。他们都是对常量池的引用，分别代表着字段的简单名称以及字段和方法的描述符。
+
+---
+
+现在需要解释一下“**简单名称**”、“**描述符**”以及“**全限定名**”这三种特殊字符串的概念。
+
+**全限定名**和**简单名称**很好理解，以下面代码为例，“com/lun/other/jvm/c06/TestClass”是这个类的**全限定名**，仅仅是把类全名中的“.”替换成了“/”而已，为了使连续的多个全限定名之间不产生混淆，在使用时最后一般会加入一个“;”表示全限定名结束。
+
+**简单名称**是指没有类型和参数修饰的方法或者字段名称，这个类中的inc()方法和m字段的简单名称分别是“inc”和“m”。
+
+	public class TestClass {
+	
+	    private int m;
+	
+	    public int inc() {
+	        return m + 1;
+	    }
+	}
+
+**描述符**的作用是用来描述字段的数据类型、方法的参数列表（包括数量、类型以及顺序）和返回值。根据描述符规则，基本数据类型（byte、char、double、float、int、long、short、boolean）以及代表无返回值的void类型都用一个大写字符来表示，而对象类型则用字符L加对象的全限定名来表示，详见下表。
+
+标识字符|含义
+---|---
+B|基本类型byte
+C|基本类型char
+D|基本类型double
+F|基本类型float
+I|基本类型int
+J|基本类型long
+S|基本类型short
+Z|基本类型boolean
+V|特殊类型void
+L|对象类型，如Ljava/lang/Object
+
+对于**数组类型**，每一维度将使用一个前置的“[”字符来描述，如一个定义为“java.lang.String[][]”类型的二维数组，将被记录为：“[[Ljava/lang/String;”，，一个整型数组“int[]”被记录为“[I”。
+
+用**描述符**来描述方法时，按照先参数列表，后返回值的顺序描述，参数列表按照参数的严格顺序放在一组小括号“( )”之内。
+
+如:
+1. 方法void inc()的描述符为“( ) V”，
+2. 方法java.lang.String toString()的描述符为“( ) LJava/lang/String;”，
+3. 方法int indexOf(char[] source, int sourceOffset, int sourceCount, char[] target, int targetOffset, int targetCount, int fromIndex)的描述符为“([CII[CIII) I”
+
+---
+
+
+
+
+
+
+
+### 方法表集合 ###
+
+
+
+### 属性表集合 ###
+
+
+
+## 字节码指令简介 ##
+
+
+
+
 
 
 
