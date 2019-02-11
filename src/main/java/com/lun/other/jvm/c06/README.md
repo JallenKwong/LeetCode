@@ -799,6 +799,48 @@ ACC_SYNTHETIC|0x1000|方法是否是由编译器自动产生的
 
 ### 属性表集合 ###
 
+在Class文件、字段表、方法表都可以携带自己的属性表集合，以用于描述某些场景专有的信息。
+
+与Class文件中其他的数据项目要求严格的顺序、长度和内容不同，属性表集合的限制**稍微宽松**了一些，不再要求各个属性表具有严格顺序，并且只要不与已有属性名重复，**任何人**实现的编译器都可以向属性表中写入自己定义的属性信息，Java虚拟机运行时会忽略掉它不认识的属性。
+
+为了能正确解析Class文件，《Java虚拟机规范（第2版）》中预定义了9项虚拟机实现应当能识别的属性，而在最新的《Java虚拟机规范（Java SE 7）》版中，预定义属性已经增加到**21**项，具体内容见下表。
+
+**虚拟机规范定义的属性**
+
+属性名称|使用位置|含义
+---|---|---
+Code|方法表|Java代码编译成的字节码指令
+ConstantValue|字段表|final关键字定义的常量值
+Deprecated|类、方法表、字段表|被声明为deprecated的方法和字段
+Exceptions|方法表|方法抛出的异常
+EnclosingMethod|类文件|仅当一个类为局部类或者匿名类时才能拥有这个属性，这个属性用于标识这个类所在的外围方法
+InnerClasses|类文件|内部类列表
+LineNumberTable|Code属性|Java源码的行号与字节码指令的对用关系
+LocalVariableTable|Code属性|方法的局部变量描述
+StackMapTable|Code属性|JDK1.6中新增的属性，供新的类型检查验证器（Type Checker）检查和处理目标方法的局部变量和操作数栈所需要的类型是否匹配
+Signature|类、方法表、字段表|JDK1.5中新增的属性，这个属性用于支持泛型情况下的方法签名，在Java语言中，任何类、接口、初始化方法或成员的泛型签名如果包含了类型变量（Type Variables）或参数化类型（Parameterized Types），则Signature属性会为他记录泛型签名信息。由于Java的泛型采用擦除法实现，在为了避免类型信息被擦出后导致签名混乱，需要这个属性记录泛型中的相关信息
+SourceFile|类文件|记录源文件名称
+SourceDebugExtension|类文件|JDK 1.6中新增的属性，SourceDebugExtension属性用于存储额外的调试信息，譬如在进行JSP文件调试时，无法同构Java堆栈来定位到JSP文件的行号，JSR-45规范为这些非Java语言编写，却需要编译成字节码并运行在Java虚拟机中的程序提供了一个进行调试的标准机制，使用SourceDebugExtension属性就可以用于存储这个标准所新加入的调试信息
+Synthetic|类、方法表、字段表|标识方法或字段为编译器自动生成的
+LocalVariableTypeTable|类|JDK 1.5中新增的属性，他使用特征签名代替描述符，是为了引入泛型语法之后能描述泛型参数化类型而添加
+RuntimeVisibleAnnotations|类、方法表、字段表|JDK 1.5中新增的属性，为动态注解提供支持。RuntimeVisibleAnnotations属性用于指明哪些注解是运行时（实际上运行时就是进行反射调用）可见的
+RuntimeInVisibleAnnotations|类、方法表、字段表|JDK 1.5新增的属性，与RuntimeVisibleAnnotations属性作用刚好相反，用于指明哪些注解是运行时不可见的
+RuntimeVisibleParameter
+Annotations|方法表|JDK 1.5新增的属性，作用与RuntimeVisibleAnnotations属性类似，只不过作用对象为方法参数
+RuntimeInVisibleAnnotations
+Annotations|方法表|JDK 1.5中新增的属性，作用与RuntimeInVisibleAnnotations属性类似，只不过作用对象为方法参数
+AnnotationDefault|方法表|JDK 1.5中新增的属性，用于记录注解类元素的默认值
+BootstrapMethods|类文件|JDK 1.7中新增的属性，用于保存invokedynamic指令引用的引导方法限定符
+
+对于每个属性，它的名称需要从**常量池中引用**一个CONSTANT_Utf8_info类型的常量来表示，而属性值的结构则是完全自定义的，只需要通过一个u4的长度属性去说明属性值所占用的位数即可。一个符合规则的属性表应该满足下表中所定义的结构
+
+类型|名称|数量
+u2|attribute_name_index|1
+u4|attribute_length|1
+u1|info|attribute_length
+
+#### Code属性 ####
+
 
 
 ## 字节码指令简介 ##
