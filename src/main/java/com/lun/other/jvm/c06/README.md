@@ -718,15 +718,84 @@ L|对象类型，如Ljava/lang/Object
 
 ---
 
+![](image/field.png)
 
+对于TestClass.class文件来说，字段表集合从地址0x000000FB开始，
 
+- 第一个u2类型的数据为容量计数器**fields_count**，如上图所示，其值为0x0001，说明这个类只有一个字段表数据。
+- 接下来紧跟着容量计数器的是**access_flags**标志，值为0x0002，代表private修饰符的ACC_PRIVATE标志位为真（ACC_PRIVATE标志的值为0x0002），其他修饰符为假。
+- 代表字段名称的**name_index**的值为0x0005，从javap得出常量表中可查得第5项常量是一个CONSTANT_Utf8_info类型的字符串，其值为“m”，
+- 代表字段描述符的**descriptor_index**的值为0x0006，指向常量池的字符串“I”，
 
+根据这些信息，我们可以推断出原代码定义的字段为：“private int m；”。
 
+字段表都包含的固定数据项目到descriptor_index为止就结束了，不过在descriptor_index之后跟随着一个属性表集合用于存储一些额外的信息，字段都可以在属性表中描述零至多项的额外信息。对于本例中的字段m，它的**attributes_count**属性表计数器为0，也就是没有需要额外描述的信息，
 
+**但是**，如果将字段m的声明改为“final static int m=123；”，那就可能会存在一项名称为ConstantValue的属性，其值指向常量123。
+
+---
+
+**字段表集合中不会列出从超类或者父接口中继承而来的字段**，**但**有可能列出原本Java代码之中不存在的字段，**譬如**在内部类中为了保持对外部类的访问性，会自动添加指向外部类实例的字段。
+
+另外，**在Java语言中字段是无法重载的**，两个字段的数据类型、修饰符不管是否相同，都必须使用不一样的名称，但是对于字节码来讲，如果两个字段的描述符不一致，那字段重名就是合法的。
 
 ### 方法表集合 ###
 
+Class文件存储格式中对方法的描述与对字段的描述几乎采用了完全一致的方式，方法表的结构如同字段表一样，依次包括了访问标志（access_flags）、名称索引（name_index）、描述符索引（descriptor_index）、属性表集合（attributes）几项，见下表。
 
+类型|名称|数量
+---|---|---
+u2|access_flags|1
+u2|name_index|1
+u2|descriptor_index|1
+u2|attributes_count|1
+attribute_info|attributes|attributes_count
+
+这些数据项目的含义也非常类似，仅在访问标志和属性表集合的可选项中有所区别。 
+
+因为volatile关键字和transient关键字不能修饰方法，所以方法表的访问标志中没有了ACC_VOLATILE标志和ACC_TRANSIENT标志。
+
+与之相对的，synchronized、native、strictfp和abstract关键字可以修饰方法，所以方法表的访问标志中增加了ACC_SYNCHRONIZED、ACC_NATIVE、ACC_STRICTFP和ACC_ABSTRACT标志。对于方法表，所有标志位及其取值可参见下表
+
+标识名称|标志值|含义
+---|---|---
+ACC_PUBLIC|0x0001|方法是否是public
+ACC_PRIVATE|0x0002|方法是否是private
+ACC_PUBLICPROTECTED|0x0004|方法是否是protected
+ACC_STATIC|0x0008|方法是否是static
+ACC_FINAL|0x0010|方法是否是final
+ACC_SYNCHRONIZED|0x0020|方法是否是synchronized
+ACC_BRIDGE|0x0040|方法是否是由编译器产生的桥接方法
+ACC_VARARGS|0x0080|方法是否接受不定参数
+ACC_NATIVE|0x0100|方法是否是native
+ACC_ABSTRACT|0x0400|方法是否是abstract
+ACC_STRICTFP|0x0800|方法是否是strictfp
+ACC_SYNTHETIC|0x1000|方法是否是由编译器自动产生的
+
+行文至此，也许会产生疑问，方法的定义可以通过访问标志、名称索引、描述符索引表达清楚，但**方法里面的代码去哪里了**？
+
+方法里的Java代码，经过编译器编译成字节码指令后，存放在方法属性表集合中一个名为“**Code**”的属性里面，属性表作为Class文件格式中最具扩展性的一种数据项目。
+
+---
+
+![](image/method.png)
+
+继续以TestClass文件为例对方法表集合进行分析，如上图所示，方法表集合的入口地址为：0x00000105，
+
+- 第一个u2类型的数据（即是计数器容量**methods_count**）的值为0x0002，代表集合中有两个方法（这两个方法为编译器添加的实例构造器<init&gt;和源码中的方法inc()）。
+- 第一个方法的访问标志值**access_flags**为0x001，也就是只有ACC_PUBLIC标志为真，
+- 名称索引值**name_index**为0x0007，查javap代码的常量池得方法名为“<init&gt;”，
+- 描述符索引**descriptor_index**值为0x0008，对应常量为“()V”，
+- 属性表计数器**attributes_count**的值为0x0001就表示此方法的属性表集合有一项属性，
+- 属性名称索引**attribute_name_index**为0x0009，对应常量为“**Code**”，说明此属性是方法的字节码描述。 
+
+---
+
+与字段表集合相对应的，如果父类方法在子类中没有被重写（Override），**方法表集合中就不会出现来自父类的方法信息**。**但**同样的，有可能会出现由编译器自动添加的方法，最典型的便是类构造器“<clinit&gt;”方法和实例构造器“<init&gt;”方法。
+
+在Java语言中，要重载（Overload）一个方法，除了要与原方法具有相同的简单名称之外，还要求必须拥有一个与原方法不同的**特征签名Signature**，特征签名**就是一个方法中各个参数在常量池中的字段符号引用的集合**，也就是因为返回值不会包含在特征签名中，因此**Java语言里面是无法仅仅依靠返回值的不同来对一个已有方法进行重载的**。(**Java代码的方法特征签名**只包括了方法名称、参数顺序及参数类型，而**字节码的特征签名**还包括方法返回值以及受查异常表)
+
+**但是**在Class文件格式中，特征签名的范围更大一些，只要描述符不是完全一致的两个方法也可以共存。也就是说，如果两个方法有相同的名称和特征签名，但返回值不同，那么也是可以合法共存于同一个Class文件中的。
 
 ### 属性表集合 ###
 
