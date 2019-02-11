@@ -63,24 +63,24 @@ Class文件是一组以8位字节为基础单位的二进制流，各个数据�
 
 ### Class文件格式 ###
 
-类型|名称|数量
----|---|---
-u4|magic|1
-u2|minor_version|1
-u2|major_version|1
-u2|constant_pool_count|1
-cp_info|constant_pool|constant_pool_count-1
-u2|access_flags|1
-u2|this_class|1
-u2|super_class|1
-u2|interfaces_count|1
-u2|interfaces|interfaces_count
-u2|fields_count|1
-field_info|fields|fields_count
-u2|methods_count|1
-method_info|methods|methods_count
-u2|attributes_count|1
-attribute_info|attributes|attributes_count
+类型|名称|数量|链接
+---|---|---|---
+u4|magic|1|<a href='#魔数与class文件的版本'>Link</a>
+u2|minor_version|1|<a href='#魔数与class文件的版本'>Link</a>
+u2|major_version|1|<a href='#魔数与class文件的版本'>Link</a>
+u2|constant_pool_count|1|<a href='#常量池'>Link</a>
+cp_info|constant_pool|constant_pool_count-1|<a href='#常量池'>Link</a>
+u2|access_flags|1|<a href='#访问标志'>Link</a>
+u2|this_class|1|<a href='#类索引父类索引与接口索引集合'>Link</a>
+u2|super_class|1|<a href='#类索引父类索引与接口索引集合'>Link</a>
+u2|interfaces_count|1|<a href='#类索引父类索引与接口索引集合'>Link</a>
+u2|interfaces|interfaces_count|<a href='#类索引父类索引与接口索引集合'>Link</a>
+u2|fields_count|1|<a href='#字段表集合'>Link</a>
+field_info|fields|fields_count|<a href='#字段表集合'>Link</a>
+u2|methods_count|1|<a href='#方法表集合'>Link</a>
+method_info|methods|methods_count|<a href='#方法表集合'>Link</a>
+u2|attributes_count|1|<a href='#属性表集合'>Link</a>
+attribute_info|attributes|attributes_count|<a href='#属性表集合'>Link</a>
 
 无论是无符号数还是表，当需要描述同一类型但数量不定的多个数据时，经常会使用一个**前置的容量计数器**加**若干个连续的数据项**的形式，这时称这一系列连续的某一类型的数据为**某一类型的集合**。
 
@@ -277,38 +277,7 @@ length值说明了这个UTF-8编码的字符串长度是多少字节，它后面
 	  #19 = NameAndType        #5:#6          // m:I
 	  #20 = Utf8               SourceFile
 	  #21 = Utf8               TestClass.java
-	{//TODO:待删
-	  public com.lun.other.jvm.c06.TestClass();
-		descriptor: ()V
-		flags: ACC_PUBLIC
-		Code:
-		  stack=1, locals=1, args_size=1
-			 0: aload_0
-			 1: invokespecial #10                 // Method java/lang/Object."<init>":()V
-			 4: return
-		  LineNumberTable:
-			line 3: 0
-		  LocalVariableTable:
-			Start  Length  Slot  Name   Signature
-				0       5     0  this   Lcom/lun/other/jvm/c06/TestClass;
-
-	  public int inc();
-		descriptor: ()I
-		flags: ACC_PUBLIC
-		Code:
-		  stack=2, locals=1, args_size=1
-			 0: aload_0
-			 1: getfield      #18                 // Field m:I
-			 4: iconst_1
-			 5: iadd
-			 6: ireturn
-		  LineNumberTable:
-			line 8: 0
-		  LocalVariableTable:
-			Start  Length  Slot  Name   Signature
-				0       7     0  this   Lcom/lun/other/jvm/c06/TestClass;
-	}
-	SourceFile: "TestClass.java"
+	...
 
 从上述代码中可看出，计算机已把整个常量池的21项常量都计算了出来，并且第1、2项常量的计算结果与我们手工计算的结果一致。
 
@@ -809,19 +778,19 @@ ACC_SYNTHETIC|0x1000|方法是否是由编译器自动产生的
 
 属性名称|使用位置|含义
 ---|---|---
-Code|方法表|Java代码编译成的字节码指令
-ConstantValue|字段表|final关键字定义的常量值
-Deprecated|类、方法表、字段表|被声明为deprecated的方法和字段
-Exceptions|方法表|方法抛出的异常
+<a href='#code属性'>Code</a>|方法表|Java代码编译成的字节码指令
+<a href='#constantvalue属性'>ConstantValue</a>|字段表|final关键字定义的常量值
+<a href='#deprecated及synthetic属性'>Deprecated</a>|类、方法表、字段表|被声明为deprecated的方法和字段
+<a href='#exceptions属性'>Exceptions</a>|方法表|方法抛出的异常
 EnclosingMethod|类文件|仅当一个类为局部类或者匿名类时才能拥有这个属性，这个属性用于标识这个类所在的外围方法
-InnerClasses|类文件|内部类列表
-LineNumberTable|Code属性|Java源码的行号与字节码指令的对用关系
-LocalVariableTable|Code属性|方法的局部变量描述
-StackMapTable|Code属性|JDK1.6中新增的属性，供新的类型检查验证器（Type Checker）检查和处理目标方法的局部变量和操作数栈所需要的类型是否匹配
-Signature|类、方法表、字段表|JDK1.5中新增的属性，这个属性用于支持泛型情况下的方法签名，在Java语言中，任何类、接口、初始化方法或成员的泛型签名如果包含了类型变量（Type Variables）或参数化类型（Parameterized Types），则Signature属性会为他记录泛型签名信息。由于Java的泛型采用擦除法实现，在为了避免类型信息被擦出后导致签名混乱，需要这个属性记录泛型中的相关信息
-SourceFile|类文件|记录源文件名称
+<a href='#innerclasses属性'>InnerClasses</a>|类文件|内部类列表
+<a href='#linenumbertable属性'>LineNumberTable</a>|Code属性|Java源码的行号与字节码指令的对用关系
+<a href='#localvariabletable属性'>LocalVariableTable</a>|Code属性|方法的局部变量描述
+<a href='#stackmaptable属性'>StackMapTable</a>|Code属性|JDK1.6中新增的属性，供新的类型检查验证器（Type Checker）检查和处理目标方法的局部变量和操作数栈所需要的类型是否匹配
+<a href='#signature属性'>Signature</a>|类、方法表、字段表|JDK1.5中新增的属性，这个属性用于支持泛型情况下的方法签名，在Java语言中，任何类、接口、初始化方法或成员的泛型签名如果包含了类型变量（Type Variables）或参数化类型（Parameterized Types），则Signature属性会为他记录泛型签名信息。由于Java的泛型采用擦除法实现，在为了避免类型信息被擦出后导致签名混乱，需要这个属性记录泛型中的相关信息
+<a href='#sourcefile属性'>SourceFile</a>|类文件|记录源文件名称
 SourceDebugExtension|类文件|JDK 1.6中新增的属性，SourceDebugExtension属性用于存储额外的调试信息，譬如在进行JSP文件调试时，无法同构Java堆栈来定位到JSP文件的行号，JSR-45规范为这些非Java语言编写，却需要编译成字节码并运行在Java虚拟机中的程序提供了一个进行调试的标准机制，使用SourceDebugExtension属性就可以用于存储这个标准所新加入的调试信息
-Synthetic|类、方法表、字段表|标识方法或字段为编译器自动生成的
+<a href='#deprecated及synthetic属性'>Synthetic</a>|类、方法表、字段表|标识方法或字段为编译器自动生成的
 LocalVariableTypeTable|类|JDK 1.5中新增的属性，他使用特征签名代替描述符，是为了引入泛型语法之后能描述泛型参数化类型而添加
 RuntimeVisibleAnnotations|类、方法表、字段表|JDK 1.5中新增的属性，为动态注解提供支持。RuntimeVisibleAnnotations属性用于指明哪些注解是运行时（实际上运行时就是进行反射调用）可见的
 RuntimeInVisibleAnnotations|类、方法表、字段表|JDK 1.5新增的属性，与RuntimeVisibleAnnotations属性作用刚好相反，用于指明哪些注解是运行时不可见的
@@ -830,18 +799,246 @@ Annotations|方法表|JDK 1.5新增的属性，作用与RuntimeVisibleAnnotation
 RuntimeInVisibleAnnotations
 Annotations|方法表|JDK 1.5中新增的属性，作用与RuntimeInVisibleAnnotations属性类似，只不过作用对象为方法参数
 AnnotationDefault|方法表|JDK 1.5中新增的属性，用于记录注解类元素的默认值
-BootstrapMethods|类文件|JDK 1.7中新增的属性，用于保存invokedynamic指令引用的引导方法限定符
+<a href='#signature属性'>BootstrapMethods</a>|类文件|JDK 1.7中新增的属性，用于保存invokedynamic指令引用的引导方法限定符
 
 对于每个属性，它的名称需要从**常量池中引用**一个CONSTANT_Utf8_info类型的常量来表示，而属性值的结构则是完全自定义的，只需要通过一个u4的长度属性去说明属性值所占用的位数即可。一个符合规则的属性表应该满足下表中所定义的结构
 
 类型|名称|数量
+---|---|---
 u2|attribute_name_index|1
 u4|attribute_length|1
 u1|info|attribute_length
 
 #### Code属性 ####
 
+Java程序方法体中的代码经过javac编译器处理后，最终变为**字节码指令**存储在Code属性内。
 
+Code属性出现在方法表的属性集合之中，但**并非**所有的方法表都必须存在这个属性，譬如接口或者抽象类中的方法就不存在Code属性，如果方法表有Code属性存在，那么他的结构将如下表所示。
+
+**Code属性表的结构**
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|max_stack|1
+u2|max_locals|1
+u4|code_length|1
+u1|code|code_length
+u2|exception_table_length|1
+exception_info|exception_table|exception_table_length
+u2|attributes_count|1
+attribute_info|attributes|attributes_count
+
+**attribute_name_index**是一项指向CONSTANT_Utf8_info型常量的索引，常量值固定为“Code”，他代表了该属性的属性名称，**attribute_length**指示了属性值的长度，由于属性名称索引与属性长度一共为6个字节，所以属性值的长度固定为整个属性表长度减少6个字节。
+
+**max_stack**代表了操作数栈（Operand Stacks）深度的最大值。在方法执行的任意时刻，操作数栈都不会超过这个深度。虚拟机运行的时候需要根据这个值分配栈帧（Stack Frame）中的操作帧深度。
+
+**max_locals**代表了局部变量表所需的存储空间。在这里，max_locals的单位是Slot，Slot是虚拟机为局部变量分配内存所使用的最小单位。对于byte、char、float、int、short、boolean和returnAddress等长度不超过32位的数据类型，每个局部变量占用1个Slot，而double和long这两种64位的数据类型则需要两个Slot来存放。
+
+方法参数（包括实例方法中的隐藏参数“this”）、显式异常处理器的参数（Exception Handler Parameter，就是try-catch语句中catch块所定义的异常）、方法体中定义的局部变量都需要使用局部变量表来存放。
+
+另外，并不是在方法中用到了多少个局部变量，就把这些局部变量所占Slot之和作为max_locals的值，原因是局部变量表中的Slot可以**重用**，当代码执行超出一个局部变量的作用域时，这个局部变量所占的Slot可以被其他局部变量所使用，Javac编译器会根据变量的作用域来分配Slot给各个变量使用，然后计算出max_locals的大小。
+
+**code_length**和**code**用来存储java源程序编译后生成的字节码指令。code_length代表字节码长度，code是用于存储字节码指令的一系列字节流。既然叫字节码指令，那么每个指令就是一个u1类型的单字节，当虚拟机读取到code中的一个字节码时，就可以对应找出这个字节码代表的是什么指令，并且可以知道这条指令后面是否需要跟随参数，以及参数应当如何理解。我们知道一个u1数据类型的取值范围为0x00~0xFF，对应十进制的0~255，也就是一共可以表达256条指令，目前，Java虚拟机规范已经定义了其中约200条编码值对应的指令含义[Link](../appendix/B)。
+
+关于**code_length**，有一件值得注意的事情，虽然他是一个u4类型的长度值，理论上最大值可以达到2的32次方减1，**但是虚拟机规范中明确限制了一个方法不允许超过65535条字节码指令**，即他实际只使用了u2的长度，如果超过这个限制，Javac编译器也会拒绝编译。一般来讲，编写Java代码时只要不是刻意去编写一个超长的方法来为难编译器，是不太可能超过这个最大值的限制。但是，某些特殊情况，例如在编译一个很复杂的JSP文件时，某些JSP编译器会把JSP内容和页面输出的信息归并于一个方法之中，就可能因为方法生成字节码超长的原因而导致编译失败。
+
+Code属性是Class文件中最重要的一个属性，如果把一个Java程序中的信息分为代码（Code，方法体里面的Java代码）和元数据（Metadata，包括类、字段、方法定义及其他信息）两部分，那么在整个Class文件中，**Code属性用于描述代码，所有的其他数据项目都用于描述元数据**。
+
+了解Code属性是学习后面关于字节码执行引擎内容的必要基础，能直接阅读字节码也是工作中分析Java代码语义问题的必要工具和基本技能，因此准备了一个比较详细的实例来讲解虚拟机是如何使用这个属性的。
+
+##### Code属性中的code详解 #####
+
+[TestClass](TestClass.java)
+
+继续以TestClass.class文件为例，如下图所示，这是上一节分析过的实例构造器“<init&gt;”方法的Code属性。它的操作数栈的最大深度和本地变量表的容量都为0x0001，字节码区域所占空间的长度为0x0005。虚拟机读取到字节码区域的长度后，按照顺序依次读入紧随的5个字节，并根据字节码指令表翻译出所对应的字节码指令。翻译“2A B7 00 0A B1”的过程为： 
+
+![](image/code.png)
+
+1. 读入2A，查表得0x2A对应的指令为aload_0，这个指令的含义是将第0个Slot中为reference类型的本地变量推送到操作数栈顶。
+
+2. 读入B7，查表得0xB7对应的指令为invokespecial，这条指令的作用是以栈顶的reference类型的数据所指向的对象作为方法接收者，**调用此对象的实例构造器方法、private方法或者他的父类的方法**。这个方法有一个u2类型的参数说明具体调用哪一个方法，他指向常量池中的一个CONSTANT_Methodref_info类型常量，即此方法的方法符号引用。
+
+3. 读入000A，这时invokespecial的参数，查常量吃得0x000A对应的常量为实例构造器“<init&gt;”方法的符号引用。
+
+4. 读入B1，查表得0xB1对应的指令为return，含义是返回此方法，并且返回值为void。这条指令执行后，当前方法结束。
+
+这段字节码虽然很短，但是至少可以看出他的执行过程中的数据交换、方法调用等操作都是基于栈（操作栈）的。我们可以初步猜测：Java虚拟机执行字节码是基于栈的体系结构。但是与一般基于堆栈的零字节指令又不太一样，某些指令（如invokespecial）后面还会带有参数。
+
+再次使用javap命令把此Class文件中另外一个方法的字节码指令也计算出来，结果如下面所示。
+
+	Administrator@USER-20180302VA MINGW64 /c/eclipse-workspace/LeetCode/target/classes/com/lun/other/jvm/c06 (master)
+	$ javap -verbose TestClass
+	...
+	{
+	  public com.lun.other.jvm.c06.TestClass();
+		descriptor: ()V
+		flags: ACC_PUBLIC
+		Code:
+		  stack=1, locals=1, args_size=1
+			 0: aload_0
+			 1: invokespecial #10                 // Method java/lang/Object."<init>":()V
+			 4: return
+		  LineNumberTable:
+			line 3: 0
+		  LocalVariableTable:
+			Start  Length  Slot  Name   Signature
+				0       5     0  this   Lcom/lun/other/jvm/c06/TestClass;
+
+	  public int inc();
+		descriptor: ()I
+		flags: ACC_PUBLIC
+		Code:
+		  stack=2, locals=1, args_size=1
+			 0: aload_0
+			 1: getfield      #18                 // Field m:I
+			 4: iconst_1
+			 5: iadd
+			 6: ireturn
+		  LineNumberTable:
+			line 8: 0
+		  LocalVariableTable:
+			Start  Length  Slot  Name   Signature
+				0       7     0  this   Lcom/lun/other/jvm/c06/TestClass;
+	}
+	SourceFile: "TestClass.java"
+
+如果大家注意到javap中输出的“**Args_size**”的值，可能会有**疑问**：
+
+- 这个类有两个方法——实例构造器<init&gt;()和inc()，这两个方法很明显都是没有参数的，为什么Args_size会为1？
+- 而且无论是在参数列表里还是方法体内，都没有定义任何局部变量，那Locals又为什么会等于1？
+
+如果有这样的疑问，大家可能是忽略了一点：在任何实例方法里面，都可以通过“this”关键字访问到此方法所属的对象。这个访问机制对Java程序的编写很重要，而他的实现却非常简单，仅仅是通过javac编译器编译的时候把对this关键字的访问转变为对一个普通方法参数的访问，然后在虚拟机调用实例方法时自动传入此参数而已。
+
+因此在实例方法的局部变量表中至少会存在一个指向当前对象实例的局部变量，局部变量表中也会预留出第一个Slot位来存放对象实例的引用，方法参数值从1开始计算。**这个处理只对实例方法有效**，如果上面代码中的inc()方法声明为static，那Args_size就不会等于1而是等于0了。
+
+##### exception_table异常表 #####
+
+在字节码指令之后的是这个方法的显示异常处理表（下文简称异常表）集合，异常表对于Code属性来说并不是必须存在的，如上面就没有异常表生成。
+
+**异常表的格式如下表所示**，他包含4个字段，这些字段的含义为：如果当字节码在第**start_pc**行到**end_pc**行之间（不含第end_pc行）出现了类型为**catch_type**或者其子类的异常（catch_type为指向一个CONSTANT_Class_info型常量的索引），则转到第**handler_pc**行继续处理。当catch_type的值为0时，代表任意异常情况都需要转向到handler_pc处进行处理。
+
+类型|名称|数量
+---|---|---
+u2|start_pc|1
+u2|end_pc|1
+u2|handler_pc|1
+u2|catch_type|1
+
+异常表实际上是Java代码的一部分，编译器使用异常表而**不是简单地跳转命令来实现**Java异常及finally处理机制。
+
+下面代码是一段演示异常表如何运作的例子，这段代码主要演示了在字节码层面中try-catch-finally是如何实现的。
+
+	//Java源码
+	public int inc(){
+		int x；
+		try{
+			x=1；
+			return x；
+		}catch(Exception e){
+			x=2；
+			return x；
+		}finally{
+			x=3；
+		}
+	}
+
+	//编译后的ByteCode字节码及异常表
+	public int inc()；
+		Code：
+			Stack=1，Locals=5，Args_size=1
+			0：iconst_1//try块中的x=1
+			1：istore_1
+			2：iload_1//保存x到returnValue中，此时x=1
+			3：istore 4
+			5：iconst_3//finaly块中的x=3
+			6：istore_1
+			7：iload 4//将returnValue中的值放到栈顶，准备给ireturn返回
+			9：ireturn
+			10：astore_2//给catch中定义的Exception e赋值，存储在Slot 2中
+			11：iconst_2//catch块中的x=2
+			12：istore_1
+			13：iload_1//保存x到returnValue中，此时x=2
+			14：istore 4
+			16：iconst_3//finaly块中的x=3
+			17：istore_1
+			18：iload 4//将returnValue中的值放到栈顶，准备给ireturn返回
+			20：ireturn
+			21：astore_3//如果出现了不属于java.lang.Exception及其子类的异常才会走到这里
+			22：iconst_3//finaly块中的x=3
+			23：istore_1
+			24：aload_3//将异常放置到栈顶，并抛出
+			25：athrow
+		Exception table：
+			from	to	target	type
+				0	5 	10		Class java/lang/Exception
+				0	5	21		any
+				10	16	21		any
+
+编译器为这段Java源码生成了3条异常表记录，对应3条可能出现的代码执行路径。从Java代码的语义上讲，这3条执行路径分别为：
+
+- 如果try语句块中出现属于Exception或其子类的异常，则转到catch语句块的处理。
+- 如果try语句块中出现不属于Exception或其子类的异常，则转到finally语句块处理。
+- 如果catch语句块中出现任何异常，则转到finally语句块处理。
+
+返回到我们上面提到的问题，这段代码的返回值应该是多少？对Java语言熟悉的应该很容易说出答案：如果没有出现异常，返回值是1；如果出现了Exception异常，返回值是2；如果出现了Exception以外的异常，方法非正常退出，没有返回值。
+
+**分析一下字节码的执行过程**
+
+- 字节码中第0~4行所做的操作就是将整数1赋值给变量x，并且将此时x的值复制一份副本到最后一个本地变量表的Slot中（这个Slot里面的值在ireturn指令执行前将会重新读到操作栈顶，作为方法返回值使用。这里给slot起了个名字：returnValue）。
+
+- 如果这时没有出现异常，则会继续走到第5~9行，将变量x赋值为3，然后将之保存在returnValue中的整数1读入到操作栈顶，最后ireturn指令会以int形式返回操作栈顶中的值，方法结束。
+
+- 如果出现了异常，PC寄存器指针转到第10行，第10~20行所做的事情是将2赋值给变量x，然后将变量x此时的值赋给returnValue，最后再将变量x的值改为3.方法返回前同样将returnValue中停留的整数2都到了操作栈顶。
+
+- 从第21行开始的代码，作用是变量x的值赋为3，并将栈顶的异常抛出，方法结束。
+
+尽管大家都知道这段代码出现异常的概率非常小，但并不影响它为我们演示异常表的作用。如果大家到这里仍然对字节码的运作过程比较模糊，其实也不要紧，关于虚拟机执行字节码的过程，稍后有更详细的讲解。
+
+//TODO:文件格式加入索引
+
+#### Exceptions属性 ####
+
+这里的Exceptions属性是在方法表中与Code属性平级的一项属性，**不要与前面刚刚讲解完的异常表产生混淆**。Exceptions属性的作用是列举出方法中可能抛出的**受查异常**（Checked Excepitons），也就是方法描述时在throws关键字后面列举的异常。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|number_of_exceptions|1
+u2|exception_index_table|number_of_exceptions
+
+Exceptions属性中的number_of_exceptions项表示方法可能抛出number_of_exceptions种受查异常，每一种受查异常使用一个exception_index_table项表示，exception_index_table是一个指向常量池中CONSTANT_Class_info型常量的索引，代表了该受查异常的类型。
+
+#### LineNumberTable属性 ####
+
+**LineNumberTable属性用于描述Java源码行号与字节码行号（字节码的偏移量）之间的对应关系**。他并不是运行时必须的属性，但默认生成到Class文件之中，可以在Javac中分别使用-g:none或-g:lines选项来取消或要求生成这项信息。如果选择不生成LineNumberTable属性，对程序运行产生的最主要的影响就是当抛出异常时，堆栈中将不会显示出错的行号，并且在调试程序的时候，也无法按照源码行来设置断点。LineNumberTable属性的结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|line_number_table_length|1
+line_number_info|line_number_table|line_number_table_length
+
+line_number_table是一个数量为line_number_table_length、类型为line_number_info的集合，line_number_info表包括了start_pc和line_number两个u2类型的数据项，前者是字节码行号，后者是Java源码行号。
+
+#### LocalVariableTable属性 ####
+
+#### SourceFile属性 ####
+
+#### ConstantValue属性 ####
+
+#### InnerClasses属性 ####
+
+#### Deprecated及Synthetic属性 ####
+
+#### StackMapTable属性 ####
+
+#### Signature属性 ###
+
+#### BootstrapMethods属性 ####
 
 ## 字节码指令简介 ##
 
