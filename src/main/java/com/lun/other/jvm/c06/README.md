@@ -1026,24 +1026,189 @@ line_number_table是一个数量为line_number_table_length、类型为line_numb
 
 #### LocalVariableTable属性 ####
 
+**LocalVariableTable属性用于描述栈帧中局部变量表中的变量与Java源码中定义的变量之间的关系**，它也不是运行时必须的属性，但默认会生成到Class文件之中，可以在Javac中分别使用-g : none或-g :vars选项来取消或要求生成这项信息。如果没有生成这项属性，最大的影响就是当前其他人引用这个方法时，所有的参数名称都将会丢失，IDE将会使用诸如arg0、arg1之类的占位符代替原有的参数名，这对程序运行没有影响，但是会对代码编写带来较大不便，而且在调试期间无法根据参数名称从上下文中获得参数值。LocalVariableTable属性的结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|local_variable_table_length|1
+local_variable_info|local_variable_table|local_variable_table_length
+
+其中，local_variable_info项目代表了一个栈帧与源码中的局部变量的关联，结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|start_pc|1
+u2|length|1
+u2|name_index|1
+u2|descriptor_index|1
+u2|index|1
+
+**start_pc**和**length**属性分别代表了这个局部变量的生命周期开始地字节码偏移量及其作用范围覆盖的长度，两者结合起来就是这个局部变量在字节码之中的作用域范围。
+
+**name_index**和**descriptor_index**都是指向常量池中CONSTANT_Utf8_info型常量的索引，分别代表了局部变量的名称以及这个局部变量的描述符。
+
+**index**是这个局部变量在栈帧局部变量表中Slot的位置。当这个变量数据类型是64位类型时（double和long），他占用的Slot为index和index+1两个。
+
+>顺便提一下，在JDK1.5引入泛型之后，LocalVariableTable属性增加了一个“姐妹属性”：LocalVariableTypeTable，这个新增的属性结构与LocalVariableTable非常相似，仅仅是吧记录的字段描述符的descriptor_index替换成了字段的特征签名（Signature），对于非泛型类型来说，描述符和特征签名能描述的信息是基本一致的，但是泛型引入后，由于描述符中反省的参数化类型被擦除掉，描述符就不能准确的描述泛型类型了，因此出现了LocalVariableTypeTable。
+
 #### SourceFile属性 ####
+
+**SourceFile属性用于记录生成这个Class文件的源码文件名称**。这个属性也是可选的，可以分别使用Javac的-g :none或=g : source选项来关闭或要求生成这项信息。在Java中，对于大多数的类来说，类名和文件名是一致的，但是有一些特殊情况（如内部类）例外。如果不生成这项属性，当抛出异常时，堆栈中将不会显示出错代码所属的文件名。这个属性是一个定长的属性，其结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|sourcefile_index|1
+
+sourcefile_index数据项是指向常量池中CONSTANT_Utf8_info型常量的索引，常量值是源码文件的文件名。
 
 #### ConstantValue属性 ####
 
+**ConstantValue属性的作用是通知虚拟机自动为静态变量赋值**。**只有被static关键字**修饰的变量（类变量）才可以使用这项属性。类似“int x = 123”和“static int x=123”这样的变量定义在Java程序中是非常常见的事情，但虚拟机对这两种变量赋值的方法和时刻都有所不同。对于非static类型的变量（也就是实例变量）的赋值是在实例构造器<init&gt;方法中进行的；而对于类变量，则有两种方式可以选择：在类构造器<clinit&gt;方法中或者使用ConstantValue属性。
+
+目前Sun Javac编译器的选择是：如果同时使用final和static来修饰一个变量（按照习惯，这里称“常量”更贴切），并且这个变量的数据类型是基本类型或者java.lang.String的话，就生成ConstantValue属性来进行初始化，如果这个变量没有被final修饰，或者并非基本类型及字符串，则将会选择在<clinit>方法中进行初始化。
+
+虽然有final关键字才更符合“ConstantValue”的语义，但虚拟机规范中并没有强制要求字段必须设置了ACC_FINAL标志，只要求了有ConstantValue属性的字段必须设置ACC_STATIC标志而已，对final关键字的要求是javac编译器自己加入的限制。
+
+而对ConstantValue属性值只能限于基本类型和String，不过不认为这是什么限制，因为此属性的属性值只是一个常量池的索引号，由于Class文件格式的常量类型中只有与基本属性和字符串相对应的字面量，所以就算ConstantValue属性在想支持别的类型也无能为力。ConstantValue属性的结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|constantvalue_index|1
+
+从数据结构中可以看出，ConstantValue属性是一个定长属性，他的attribute_length数据项值必须固定为2。constantvalue_index数据项代表了常量池中一个字面量常量的引用，根据字段类型的不同，字面量可以是CONSTANT_Long_info、CONSTANT_Float_info、CONSTANT_Double_info、CONSTANT_Integer_info、CONSTANT_String_info常量中的一种。
+
 #### InnerClasses属性 ####
+
+**InnerClasses属性用于记录内部类与宿主类之间的关联**。如果一个类中定义了内部类，那编译器将会为他以及他所包含的内部类生成InnerClasses属性。该属性的结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|number_of_class|1
+inner_classes_info|inner_class|number_of_classes
+
+数据项number_of_classes代表需要记录多少个内部类信息，每一个内部类的信息都由一个inner_classes_info表进行描述。inner_classes_info的结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|inner_class_info_index|1
+u2|outer_class_info_index|1
+u2|inner_name_index|1
+u2|inner_class_access_info|1
+
+**inner_class_info_index**和**outer_class_info_index**都是指向常量池中CONSTANT_Class_info型常量的索引，分别代表了内部类和宿主类的符号引用。
+
+**inner_name_index**是指向常量池中CONSTANT_Utf8_info型常量的索引，代表这个内部类的名称，如果是匿名内部类，那么这项值为0。
+
+**inner_class_access_flags**是内部类的访问标志，类似于类的access_flags，它的取值范围如下表。
+
+标志名称|标志值|含义
+---|---|---
+ACC_PUBLIC|0x0001|内部类是否为public
+ACC_PRIVATE|0x0002|内部类是否为private
+ACC_PROTECTED|0x0004|内部类是否为protected
+ACC_STATIC|0x0008|内部类是否为static
+ACC_FINAL|0x0010|内部类是否为final
+ACC_INTERFACE|0x0020|内部类是否为synchronized
+ACC_ABSTRACT|0x0400|内部类是否为abstract
+ACC_SYNTHETIC|0x1000|内部类是否并非由用户代码产生的
+ACC_ANNOTATION|0x2000|内部类是否是一个注解
+ACC_ENUM|0x4000|内部类是否是一个枚举
 
 #### Deprecated及Synthetic属性 ####
 
+Deprecated和Synthetic两个属性都属于标志类型的布尔属性，只存在有和没有的区别，没有属性值的概念。
+
+Deprecated属性用于表示每个类、字段或者方法，已经被程序作者定位不在推荐使用，他可以通过在代码中使用@deprecated注释进行设置。
+
+Synthetic属性代表此字段或者方法并不是由Java源码直接产生的，而是由编译器自行添加的，在JDK 1.5之后，标识一个类、字段或者方法是编译器自动产生的，也可以设置他们访问标志中的ACC_SYNTHETIC标志位，其中最典型的例子就是Bridge Method。所有由非用户代码产生的类、方法及字段都应当至少设置Synthetic属性和ACC_SYNTHETIC标志位中的一项，唯一的例外是实例构造器“<init&gt;”方法和类构造器“<clinit&gt;”方法。
+
+Deprecated和Synthetic属性的结构非常简单，见下表。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+
+其中attribute_length数据项的值必须为0x00000000，因为没有任何属性值需要设置。
+
+>synthetic
+>英 [sɪnˈθetɪk]   美 [sɪnˈθɛtɪk]  
+>adj.
+>合成的;人造的;摹拟的，虚构的;[语]综合的
+>n.
+>合成物;合成纤维;合成剂
+
 #### StackMapTable属性 ####
+
+StackMapTable属性在JDK 1.6发布周增加到了Class文件规范中，它是一个复杂的变长属性，位于Code属性的属性表，这个属性会在虚拟机类加载的字节码验证阶段被**新类型检查验证器**（Type Checker）使用，目的在于**代替**以前比较消耗性能的基于数据流分析的类型推导验证器。
+
+这个类型检查验证器最初来源于Sheng Liang（听名字似乎是虚拟机团队中的华裔成员）为Java ME CLDC实现的字节码验证器。新的验证器在同样能保证Class文件合法性的前提下，省略了在运行期通过数据流分析确认字节码的行为逻辑合法性的步骤，而是在编译阶段将一系列的验证类型（Verification Types）直接记录在Class文件之中，通过检查这些验证类型代替了类型推导过程，从而大幅提升了字节码验证的性能。这个验证器在JDK 1.6中首次提供，并在JDK 1.7中强制代替原本基于类型推断的字节码验证器。
+
+关于这个验证器的工作原理，《Java虚拟机规范（Java SE 7版）》花费了整整120页的篇幅来讲解描述，并且分析证明新验证方法的严谨性，在此不再赘述。
+
+StackMapTable属性中包含零至多个栈映射帧（Stack Map Frames），每个栈映射帧都显式或隐式地代表了一个字节码偏移量，用于表示该执行到该字节码时局部变量表和操作数栈的验证类型。类型检查验证器会通过检查目标方法的局部变量和操作数栈所需要的类型来确定一段字节码指令是否符合逻辑约束。StackMapTable属性的结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|number_of_entries|1
+stack_map_frame|stack_map_frame_entries|number_of_entries
+
+《Java虚拟机规范（Java SE 7版）》明确规定：在版本号大于或等于50.0的Class文件中，如果方法的Code属性中没有附带StackMapTable属性，那就意味着他带有一个隐式的StackMap属性。这个StackMap属性的作用等同于number_of_entries值为0的StackMapTable属性。一个方法的Code属性最多只能有一个StackMapTable属性，否则将抛出ClassFormatError异常。
 
 #### Signature属性 ###
 
+Signature属性在JDK 1.5发布后增加到了Class文件规范之中，他是一个可选的定长属性，可以出现于类、属性表和方法表结构的属性表中。在JDK 1.5大幅增强了Java语言的语法，在此之后，任何类、接口、初始化方法或成员的泛型签名如果包含了类型变量（Type Variables）或参数化类型（Parameterized Types），则Signature属性会为他记录泛型签名信息。之所以要专门使用这样一个属性去记录泛型类型，是因为Java语言的泛型采用的是擦除法实现的伪泛型，在字节码（Code属性）中，泛型信息编译（类型变量、参数化类型）之后都统统被擦除掉。
+
+使用擦除法的**好处**是实现简单（主要修改Javac编译器，虚拟机内部只做了很少的改动）、非常容易实现Backport，运行期也能够节省一些类型所占的内存空间。但**坏处**是运行期就无法像C#等有真泛型支持的语言那样，将泛型类型与用户定义的普通类型同等对待，例如运行期做反射时无法获得到泛型信息。Signature属性就是为了弥补这个缺陷而增设的，现在Java的反射API能够获取泛型类型，最终的数据来源也就是这个属性。Signature属性的结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|signature_index|1
+
+其中signature_index项的值必须是一个对常量池的有效索引。常量池在该索引处的项必须是CONSTANT_Utf8_info结构，表示类签名、方法类型签名或字段类型签名。如果当前的Signature属性是类文件的属性，则这个结构表示类签名，如果当前的Signature属性是方法表的属性，则这个结构表示方法类型签名，如果当前Signature属性是字段表的属性，则这个结构表示字段类型签名。
+
 #### BootstrapMethods属性 ####
+
+BootstrapMethods属性在JDK 1.7发布后增加到了Class文件规范之中，他是一个复杂的变长属性，位于类文件的属性表中。这个属性用于保存invokedynamic指令引用的引导方法限定符。《Java虚拟机规范（Java SE 7版）》规定，如果某个类文件结构的常量池中曾经出现过CONSTANT_InvokeDynamic_info类型的常量，那么这个类文件的属性表中必须存在一个明确地BootstrapMethods属性，另外，即使CONSTANT_InvokeDynamic_info类型的常量在常量池中出现过多次，类文件的属性表中最多也只能一个BootstrapMethods属性。BootstrapMethods属性与JSR-292中的InvokeDynamic指令和java.lang.Invoke包关系非常密切。**要介绍这个属性的作用，必须先弄清楚InovkeDynamic指令的运作原理**，稍后有介绍
+
+目前的Javac暂时无法生成InvokeDynamic指令和BootstrapMethods属性，必须通过一些非常规的手段才能使用到它们，也许在不久的将来，等JSR-292更加成熟一些，这种状况就会改变。BootstrapMethods属性的结构见下表。
+
+类型|名称|数量
+---|---|---
+u2|attribute_name_index|1
+u4|attribute_length|1
+u2|num_bootstrap_methods|1
+bootstrap_method|bootstrap_methods|num_bootstrap_methods
+
+其中引用到的bootstrap_method结构见下表
+
+类型|名称|数量
+---|---|---
+u2|bootstrap_method_ref|1
+u2|num_bootstrap_arguments|1
+u2|bootstrap_arguments|num_bootstrap_arguments
+
+BootstrapMethods属性中，num_bootstrap_methods项的值给出了bootstrap_methods[]数组中的引导方法限定符的数量。而bootstrap_methods[]数组的每个成员包含了一个指向常量池CONSTANT_MethodHandle结构的索引值，他代表了一个引导方法，还包含了这个引导方法静态参数的序列（可能为空）。bootstrap_methods[]数组中的每个成员必须包含以下3项内容。
+
+- bootstrap_method_ref：bootstrap_method_ref项的值必须是一个对常量池的有效索引。常量池在该索引处的值必须是一个CONSTANT_MethodHandle_info结构。
+- num_bootstrap_arguments：num_bootstrap_arguments项的值给出了bootstrap_arguments[]数组成员的数量。
+- bootstrap_arguments[]：bootstrap_arguments[]数组的每个成员必须是一个对常量池的有效索引。常量池在该索引处必须是下列结构之一：CONSTANT_String_info、CONSTANT_Class_info、CONSTANT_Integer_info、CONSTANT_Long_info、CONSTANT_Float_info、CONSTANT_Double_info、CONSTANT_MethodHandle_info或CONSTANT_MethodType_info。
 
 ## 字节码指令简介 ##
 
-
-
+### 字节码与数据类型 ###
 
 
 
