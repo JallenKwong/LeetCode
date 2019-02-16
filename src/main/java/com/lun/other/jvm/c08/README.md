@@ -199,7 +199,86 @@ Java虚拟机的解释执行引擎称为“基于栈的执行引擎”，其中�
 
 ### 解析 ###
 
+所有方法调用中的目标方法在Class文件里面都是一个常量池中的符号引用，**在类加载的解析阶段，会将其中的一部分符号引用转化为直接引用**，这种解析能成立的前提是：方法在程序真正运行之前就有一个可确定的调用版本，并且这个方法的调用版本在运行期是不可能改变的。**换句话说，调用目标在程序代码写好、编译器进行编译时就必须确定下来**。这类方法的调用称为解析（Resolution）
+
+>PS. 与重载和重写的对比理解
+
+在Java语言中符合“编译期可知，运行期不可变”这个要求的方法，主要包括静态方法和私有方法两大类，前者与类型直接关联，后者在外部不可被访问，这两种方法各自的特点决定了它们都不可能通过集成或别的方式重写其他版本，因此它们都适合在类加载阶段进行解析。
+
+与之相对应的是，在Java虚拟机里面提供了5条方法调用字节码指令，分别如下。
+
+1. invokestatic：调用静态方法；
+
+2. invokespecial：调用实例构造器<init>方法、私有方法和父类方法；
+
+3. invokevirtual：调用所有的虚方法；
+
+4. invokeinterface：调用接口方法，会在运行时再确定一个实现此接口的对象；
+
+5. invokedynamic：先在运行时动态解析出调用掉限定符所引用的方法，然后再执行该方法，在此之前的4条调用指令，分派逻辑是固化在Java虚拟机内部的，而invokedynamic指令的分派逻辑是由用户所设定的引导方法决定的。
+
+[Link](../c06#方法调用和访问指令)
+
+只要能被invokestatic和invokespecial指令调用的方法，都可以在解析阶段中确定唯一的调用版本，符合这个条件的有4类：
+
+1. 静态方法、
+2. 私有方法、
+3. 实例构造器、
+4. 父类方法
+
+它们在类加载的时候就会把符号引用解析为该方法的直接引用。这些方法可以称为非虚方法，
+
+与之相反，其他方法称为虚方法（除去final方法，后文会提到）。下面代码演示了一个最常见的解析调用的例子，在此样例中，静态方法sayHello()只可能属于类型StaticResolution，没有任何手段可以覆盖或隐藏这个方法。
+
+	public class StaticResolution {
+	
+		public static void sayHello(){
+			System.out.println("hello world");
+		}
+		public static void main(String[] args) {
+			StaticResolution.sayHello();
+		}
+	}
+
+使用javap命令查看这字节码，会发现的确是通过invokestatic命令来调用sayHello()的
+
+	...
+	public static void main(java.lang.String[]);
+	descriptor: ([Ljava/lang/String;)V
+	flags: ACC_PUBLIC, ACC_STATIC
+	Code:
+	  stack=0, locals=1, args_size=1
+	     0: invokestatic  #31                 // Method sayHello:()V
+	     3: return
+	  LineNumberTable:
+	    line 10: 0
+	    line 11: 3
+	  LocalVariableTable:
+	    Start  Length  Slot  Name   Signature
+	        0       4     0  args   [Ljava/lang/String;
+	...
+
+Java中的非虚方法除了使用invokestatic、invokespecial调用的方法之外还有一种，就是被**final**修饰的方法。虽然final方法是使用**invokevirtual**指令来调用的，但是由于它无法被覆盖，没有其他版本，所以也无须对方法接收者进行多态选择，又或者说多态选择的结果肯定是唯一的。**在Java语言规范中明确说明了final方法是一种非虚方法**。
+
+**解析调用一定是个静态的过程，在编译期间就完全确定，在类加载的解析阶段就会把涉及的符号引用全部转变为可确定的直接引用，不会延迟到运行期再去完成**。而分配（Dispatch）调用则可能是静态的也可能是动态的，根据分配依据的宗量数可分为单分派和多分派。这两类分配方式的两两组合就构成了静态单分派、静态多分派、动态单分派、动态多分派4种分配组合情况，下面看虚拟机中的方法分派是如何进行的。
+
 ### 分派 ###
+
+本节讲解的分派调用过程将会揭示多态性特征的一些最基本的体现，如“重载”和“重写”在Java虚拟机之中是如何实现的。
+
+#### 静态分派 ####
+
+[方法静态分派演示](StaticDispatch.java)
+
+运行结果：
+
+	hello,guy!
+	hello,guy!
+
+**上面的代码为什么会选择执行参数类型为Human的重载呢？**在解决这个问题之前，我们先按如下代码定义两个重要的概念。
+
+	Human man = new Man();
+
 
 ### 动态类型语言支持 ###
 
