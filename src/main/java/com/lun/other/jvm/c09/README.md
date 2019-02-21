@@ -165,6 +165,8 @@ OSGi之所以能有上述“诱人”的特点，要归功于它灵活的类加�
 
 加入这句代码后再次运行程序，磁盘中将会产生一个名为“$Proxy0.class”的代理类Class文件 ，反编译后可以看见如下面代码所示的内容。
 
+>[JD-GUI(Java反编译工具)](https://www.cr173.com/soft/5606.html)反编译$Proxy0.class文件
+
 [$Proxy0.class]($Proxy0.class.txt)
 
 这个代理类的实现代码也很简单，它为传入接口中的每一个方法，以及从 java.lang.Object中继承来的equals()、hashCode()、toString()方法都生成了对应的实现 ，并且统一调用了InvocationHandler对象的invoke()方法(代码中的“this.h”就是父类Proxy中保存的InvocationHandler实例变量)来实现这些方法的内容，各个方法的区别不过是传入的参数和Method对象有所不同而已，所以无论调用动态代理的哪一个方法，实际上都是在执行InvocationHandler.invoke()中的代理逻辑。
