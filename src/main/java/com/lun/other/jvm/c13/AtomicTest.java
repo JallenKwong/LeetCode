@@ -17,6 +17,8 @@ public class AtomicTest {
 	private static final int THREADS_COUNT = 20;
 	
 	public static void main(String[] args) {
+		int a = 1 + 2;
+		
 		Thread[] threads = new Thread[THREADS_COUNT];
 		for (int i = 0; i < THREADS_COUNT; i ++) {
 			threads[i] = new Thread(new Runnable() {
