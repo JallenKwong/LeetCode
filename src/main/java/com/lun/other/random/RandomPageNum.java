@@ -32,7 +32,7 @@ public class RandomPageNum {
 		for(int i = 0; i < array.length; i++) {
 			System.out.print(array[i] + " ");
 			
-			if((i + 1) % 5 == 0) {
+			if((i + 1) % 2 == 0) {
 				System.out.println();
 				System.out.print("- [ ]" + ++j + ". ");
 			}

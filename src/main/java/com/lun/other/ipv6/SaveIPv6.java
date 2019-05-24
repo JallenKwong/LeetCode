@@ -74,6 +74,10 @@ public class SaveIPv6 {
 	    }
 	}
 	
+	private int a() {
+		return 0;
+	}
+	
 }
 
 /* result:
@@ -82,3 +86,20 @@ public class SaveIPv6 {
 本次测试 ipv6 地址: 7654:0:FFFF:7654:562:222:7622:0, 转为 long 数组: [8526721465200965204, 129888436749666], 再转回 ipv6 字符串: 7654:0:ffff:7654:562:222:7622:0, 是否与原字符串相等: true
 本次测试 ipv6 地址: 0:0:0:0:0:0:0:0, 转为 long 数组: [0, 0], 再转回 ipv6 字符串: 0:0:0:0:0:0:0:0, 是否与原字符串相等: true
 */
+
+/**
+ * static方法不会被override
+ * 
+ * @author 白居布衣
+ *
+ */
+class A extends SaveIPv6{
+	public static long[] ip2Longs(String ipString) {
+		return null;
+	}
+	
+	private int a() {
+		return 0;
+	}
+}
+
