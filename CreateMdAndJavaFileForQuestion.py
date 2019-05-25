@@ -56,6 +56,7 @@ mdFile = open(dirName + fileName + ".md","w")
 mdFile.write("# " + fileName + " #\n\n")
 mdFile.write("tag:\n\n")#标签
 mdFile.write("[]()\n\n")#链接地址
+mdFile.write("[Source Code](%s.java)\n\n"%fileName)
 
 mdFile.close()
 
@@ -77,7 +78,11 @@ testFile.write("import static org.junit.Assert.*;\n")
 testFile.write("import org.junit.Test;\n\n")
 testFile.write("public class " + fileName + "Test {\n\n")
 testFile.write("\t@Test\n")
-testFile.write("\tpublic void test() {\n\n\t}\n}\n")
+testFile.write("\tpublic void test() {\n")
+
+testFile.write("\t\t%s obj = new %s();\n\n\t\t\n"%(fileName,fileName))
+
+testFile.write("\t}\n}\n")
 
 testFile.close()
 

@@ -49,7 +49,9 @@ Given an integer (signed 32 bits), write a function to check whether it is a pow
 
 符合这两个条件的二进制数是：
 
-1010101010101010101010101010101
+	1010101010101010101010101010101
 
 转换成
+
+	0x55555555
 
