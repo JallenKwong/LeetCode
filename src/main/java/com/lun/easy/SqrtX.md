@@ -1,8 +1,8 @@
 # SqrtX #
 
-tag:
+tag:Math,Binary Search
 
-[]()
+[https://leetcode.com/problems/sqrtx/](https://leetcode.com/problems/sqrtx/)
 
 [Source Code](SqrtX.java)
 
@@ -25,3 +25,18 @@ Since the return type is an integer, the decimal digits are truncated and only t
 	             the decimal part is truncated, 2 is returned.
 
 **Thinking:**
+
+[https://www.cnblogs.com/qlky/p/7735145.html](https://www.cnblogs.com/qlky/p/7735145.html)
+
+一、
+
+二分查找
+
+
+二、
+
+牛顿迭代法
+
+
+
+
