@@ -59,6 +59,22 @@ PS.特别地注意数组下标的标注
 
 [ConstructBinaryTree](ConstructBinaryTree.java)
 
+## 8. 二叉树的下一个节点 ##
+
+tag:二叉树
+
+	给定一棵二叉树和其中的一个节点，如何找出中序遍历序列的下一个节点？树中的节点除了有两个分别指向左右子节点的指针，还有一个指向父节点的指针
+
+![](image/01.png)
+
+PS.分三种情况
+
+1. 若一个节点有右子树，那么它的下一个节点就是它的右子树的最左子树
+2. 没有右子树
+3. 即没有右子树，且该节点是父节点的右节点
+
+[NextNodeOfBinaryTree](NextNodeOfBinaryTree.java)
+
 ## 9. 用两个栈实现队列 ##
 
 tag:栈 队列
@@ -148,11 +164,18 @@ tag:位运算
 
 [CountFrequencyOfOne](CountFrequencyOfOne.java)
 
+## 17. 打印从1到最大的n位数 ##
+
+tag:字符串
+
+输入数字n，按顺序打印出来从1到最大的n位是十进制。比如输入3，则打印出1、2、3一直到最大的3位数999
+
 
 ## 18. 删除链表的节点 ##
 
 tag:链表
 
+TODO:
 
 ## 22. 链表中倒数第k个节点 ##
 
