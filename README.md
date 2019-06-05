@@ -21,16 +21,28 @@
 - [DesignHashSet](src/main/java/com/lun/easy/DesignHashSet.md) --- [Solution Code](src/main/java/com/lun/easy/DesignHashSet.java) --- Hash Table, Design
 
 
+- [LowestCommonAncestorOfABinarySearchTree](src/main/java/com/lun/easy/LowestCommonAncestorOfABinarySearchTree.md) --- [Solution Code](src/main/java/com/lun/easy/LowestCommonAncestorOfABinarySearchTree.java) --- Tree
+
+
 - [MergeTwoSortedLists](src/main/java/com/lun/easy/MergeTwoSortedLists.md) --- [Solution Code](src/main/java/com/lun/easy/MergeTwoSortedLists.java) --- LinkedList
 
 
 - [MinimumAbsoluteDifferenceInBST](src/main/java/com/lun/easy/MinimumAbsoluteDifferenceInBST.md) --- [Solution Code](src/main/java/com/lun/easy/MinimumAbsoluteDifferenceInBST.java) --- Binary Search Tree
 
 
+- [PowerOfFour](src/main/java/com/lun/easy/PowerOfFour.md) --- [Solution Code](src/main/java/com/lun/easy/PowerOfFour.java) --- Bit Manipulation
+
+
 - [ReverseWordsInAStringIII](src/main/java/com/lun/easy/ReverseWordsInAStringIII.md) --- [Solution Code](src/main/java/com/lun/easy/ReverseWordsInAStringIII.java) --- String
 
 
 - [RotateArray](src/main/java/com/lun/easy/RotateArray.md) --- [Solution Code](src/main/java/com/lun/easy/RotateArray.java) --- Array
+
+
+- [SqrtX](src/main/java/com/lun/easy/SqrtX.md) --- [Solution Code](src/main/java/com/lun/easy/SqrtX.java) --- Math,Binary Search
+
+
+- [ValidPerfectSquare](src/main/java/com/lun/easy/ValidPerfectSquare.md) --- [Solution Code](src/main/java/com/lun/easy/ValidPerfectSquare.java) --- Math,Binary Search
 
 
 ## MEDIUM ##
@@ -83,5 +95,5 @@
 
 Total|Easy|Medium|Hard
 ---|---|---|---
-21|7|10|4
+25|11|10|4
 

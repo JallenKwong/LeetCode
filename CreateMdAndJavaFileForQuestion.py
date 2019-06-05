@@ -4,7 +4,7 @@
 
 import os,sys,re
 
-os.chdir("C:\\eclipse-workspace\\LeetCode")
+os.chdir("C:\\eclipse-workspace\\LeetCode")#使用相对位置，在eclipse环境下会跳到另一个目录
 
 print "Current working directory: "
 print os.getcwd()
