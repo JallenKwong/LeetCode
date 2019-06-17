@@ -208,6 +208,15 @@ PS.
 
 [FindEntryNodeOfLoop](FindEntryNodeOfLoop.java)
 
+## 24. 反转链表 ##
+
+tag:链表
+
+	定义一个函数，输入一个链表的头节点，反转链表并输出反转后链表的头节点。
+
+PS.使用三个指针进行边移动边逆
+
+[ReverseList](ReverseList.java)
 
 ## 25. 合并两个排序的链表 ##
 
@@ -429,7 +438,7 @@ tag:归并排序
 	
 	例如，在数组{7， 5， 6， 4}中，一共存在5个逆序对，分别是(7, 6)、(7, 5)、(7, 4)、(6, 4)和(5, 4)。
 
-PS.巧妙地归并排序进行操作
+PS.巧妙地归并排序来解决问题。
 
 [InversePairs](InversePairs.java)
 
