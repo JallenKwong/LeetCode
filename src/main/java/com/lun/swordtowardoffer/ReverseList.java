@@ -26,9 +26,7 @@ public class ReverseList {
 				b = b.next;
 		}
 		
-		
 		return c;
-		
 	}
 	
 }
