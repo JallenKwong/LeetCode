@@ -33,9 +33,8 @@ public class UglyNumber {
 	}
 	
 	public int getUglyNumber2(int index) {
-		if(index <= 0) {
+		if(index <= 0) 
 			return 0;
-		}
 
 		int[] uglyNumbers = new int[index];
 		uglyNumbers[0] = 1;
@@ -49,6 +48,7 @@ public class UglyNumber {
 			
 			uglyNumbers[nextUglyIndex] = min;
 			
+			//预测下一个丑数
 			while(uglyNumbers[index2] * 2 <= min)
 				++index2;
 			while(uglyNumbers[index3] * 3 <= min)

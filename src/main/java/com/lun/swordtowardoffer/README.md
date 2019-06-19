@@ -443,6 +443,14 @@ PS.
 
 [UglyNumber](UglyNumber.java)
 
+## 50. 第一个只出现一次的字符 ##
+
+tag:哈希表
+
+	在字符串中找出第一个只出现一次的字符。如输入"abaccdeff"，则输出'b'。
+
+[FirstNotRepeatingChar](FirstNotRepeatingChar.java)
+
 ## 51. 数组中的逆序对 ##
 
 tag:归并排序
