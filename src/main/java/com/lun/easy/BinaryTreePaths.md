@@ -4,6 +4,8 @@ tag:Tree, Depth-first Search
 
 [https://leetcode.com/problems/binary-tree-paths/](https://leetcode.com/problems/binary-tree-paths/)
 
+[Source Code](BinaryTreePaths.java)
+
 Given a binary tree, return all root-to-leaf paths.
 
 **Note**: A leaf is a node with no children.

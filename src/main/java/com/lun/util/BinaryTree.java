@@ -50,7 +50,7 @@ public class BinaryTree {
 	 * @param array
 	 * @return
 	 */
-	public static TreeNode integerArray2BinaryTree(int[] array) {
+	public static TreeNode integerArray2BinarySearchTree(int[] array) {
 		if(array == null || array.length == 0) {
 			throw new IllegalArgumentException("Illegal array.");
 		}

@@ -4,6 +4,8 @@ tag:Hash Table, Design
 
 [https://leetcode.com/problems/design-hashmap/](https://leetcode.com/problems/design-hashmap/)
 
+[Source Code](DesignHashMap.java)
+
 Design a HashMap without using any built-in hash table libraries.
 
 To be specific, your design should include these functions:

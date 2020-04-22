@@ -11,13 +11,13 @@ public class SumRootToLeafNumberTest {
 
 	@Test
 	public void test() {
-		TreeNode root = BinaryTree.integerArray2BinaryTree(new int[]{1, 2, 3});
+		TreeNode root = BinaryTree.integerArray2BinarySearchTree(new int[]{1, 2, 3});
 		BinaryTree.inorderTraversing(root);
 	}
 	
 	@Test
 	public void test2() {
-		TreeNode root = BinaryTree.integerArray2BinaryTree(new int[]{4, 9, 0, 5, 1});
+		TreeNode root = BinaryTree.integerArray2BinarySearchTree(new int[]{4, 9, 0, 5, 1});
 		BinaryTree.inorderTraversing(root);
 	}
 	

@@ -13,7 +13,7 @@ public class MirrorRecursivelyTest {
 	public void testMirror() {
 		MirrorRecursively mr = new MirrorRecursively();
 		
-		TreeNode actual = BinaryTree.integerArray2BinaryTree(new int[] {8,6,10,5,7,9,11});
+		TreeNode actual = BinaryTree.integerArray2BinarySearchTree(new int[] {8,6,10,5,7,9,11});
 		
 		mr.mirror(actual);
 		

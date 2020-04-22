@@ -1,9 +1,7 @@
 package com.lun.swordtowardoffer;
 
 import org.junit.Test;
-
 import com.lun.swordtowardoffer.GetDepthOfBinaryTree.BinaryTreeNode;
-
 import static org.junit.Assert.*;
 
 public class GetDepthOfBinaryTreeTest {
@@ -21,7 +19,6 @@ public class GetDepthOfBinaryTreeTest {
 		root.right.right = new BinaryTreeNode(3);
 		return root;
 	}
-	
 	
 	@Test
 	public void test() {

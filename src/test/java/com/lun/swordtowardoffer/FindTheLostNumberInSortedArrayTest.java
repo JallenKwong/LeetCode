@@ -26,4 +26,11 @@ public class FindTheLostNumberInSortedArrayTest {
 		assertEquals(6, fa.find(array));
 	}
 	
+	@Test
+	public void test4() {
+		int[] array = {0};
+		FindTheLostNumberInSortedArray fa = new FindTheLostNumberInSortedArray();		
+		assertEquals(-1, fa.find(array));
+	}
+	
 }

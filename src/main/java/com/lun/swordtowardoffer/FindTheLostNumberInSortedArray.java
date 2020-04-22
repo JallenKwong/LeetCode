@@ -10,7 +10,7 @@ public class FindTheLostNumberInSortedArray {
 		
 		int start = 0;
 		int end = array.length - 1;
-		int mid = (start + end) / 2;
+		int mid = start + (end - start) / 2;//(start + end) / 2;
 		
 		while(start <= end) {
 			if(mid == array[mid]) {
@@ -22,7 +22,7 @@ public class FindTheLostNumberInSortedArray {
 					end = mid - 1;
 				}
 			}
-			mid = (start + end) / 2;
+			mid = start + (end - start) / 2;
 		}
 		
 		return -1;

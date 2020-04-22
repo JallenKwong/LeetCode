@@ -20,14 +20,10 @@ public class CountNumberInSortedArray {
 		return 0;
 	}
 	
-	
 	public int findIndexOfTarget(int[] array, int target, int start, int end, boolean firstOrLast) {
-	
-		int mid = (start + end) / 2;
-		
+		int mid = start + (end - start) / 2;
 		while(start <= end) {
 			if(array[mid] == target) {
-				
 				if(firstOrLast == FIRST) {
 					if(mid == 0 || array[mid - 1] != array[mid]) {
 						return mid;
@@ -41,15 +37,13 @@ public class CountNumberInSortedArray {
 						return findIndexOfTarget(array, target, mid + 1, end, firstOrLast);
 					}
 				}
-				
 			}else if(array[mid] < target){
 				start = mid + 1;
 			}else {
 				end = mid - 1;
 			}
-			mid = (start + end) / 2;
+			mid = start + (end - start) / 2;
 		}
-		
 		return -1;
 	}
 	

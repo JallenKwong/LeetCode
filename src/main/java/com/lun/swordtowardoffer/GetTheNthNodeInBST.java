@@ -4,39 +4,33 @@ import com.lun.util.BinaryTree.TreeNode;
 
 public class GetTheNthNodeInBST {
 
-	private int num;
-	
+	//private int num;
 	
 	public TreeNode get(TreeNode root, int n) {
-		
 		if(root == null || n <= 0)
 			return null;
-		
-		num = n;
-		
-		return get2(root);
+		int[] num = {n};
+		return get2(root, num);
 	}
 
-	public TreeNode get2(TreeNode node) {
-		TreeNode target = null;
+	public TreeNode get2(TreeNode node, int[] num) {
+		TreeNode result = null;
 		
 		if(node.left != null) {
-			target = get2(node.left);
+			result = get2(node.left, num);
 		}
 		
-		if(target == null) {
-			if(num == 1)
-				target = node;
-			num--;
+		if(result == null) {
+			if(num[0] == 1)
+				result = node;
+			num[0]--;
 		}
 		
-		if(target == null && node.right != null) {
-			target = get2(node.right);
+		if(result == null && node.right != null) {
+			result = get2(node.right, num);
 		}
 		
-		return target;
-		
-		
+		return result;
 	}
 	
 }

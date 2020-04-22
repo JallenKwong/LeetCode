@@ -1,11 +1,8 @@
 package com.lun.swordtowardoffer;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import com.lun.util.BinaryTree.TreeNode;
-
 
 public class CheckTreeBalancedTest {
 
@@ -27,7 +24,6 @@ public class CheckTreeBalancedTest {
 	public void testCheck() {
 		CheckTreeBalanced cb = new CheckTreeBalanced();
 		assertTrue(cb.check(makeATree()));
-		
 	}
 
 }

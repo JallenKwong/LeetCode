@@ -20,7 +20,7 @@ public class BinaryTreeTest {
 		// \    /
 		// 499 689
 		//
-		TreeNode root = BinaryTree.integerArray2BinaryTree(new int[] {600,424,612,499,689});
+		TreeNode root = BinaryTree.integerArray2BinarySearchTree(new int[] {600,424,612,499,689});
 		
 		assertEquals("600,424,499,612,689", BinaryTree.preorderTraversing(root));
 		assertEquals("424,499,600,612,689", BinaryTree.inorderTraversing(root));
@@ -34,12 +34,12 @@ public class BinaryTreeTest {
 		TreeNode root2 = null;
 		assertTrue(BinaryTree.equals(root1, root2));
 		
-		root1 = BinaryTree.integerArray2BinaryTree(new int[] {600,424,612,499,689});
-		root2 = BinaryTree.integerArray2BinaryTree(new int[] {600,424,612,499,689});
+		root1 = BinaryTree.integerArray2BinarySearchTree(new int[] {600,424,612,499,689});
+		root2 = BinaryTree.integerArray2BinarySearchTree(new int[] {600,424,612,499,689});
 		assertTrue(BinaryTree.equals(root1, root2));
 
-		root1 = BinaryTree.integerArray2BinaryTree(new int[] {600,424,612,499,689});
-		root2 = BinaryTree.integerArray2BinaryTree(new int[] {600,424,612,499});
+		root1 = BinaryTree.integerArray2BinarySearchTree(new int[] {600,424,612,499,689});
+		root2 = BinaryTree.integerArray2BinarySearchTree(new int[] {600,424,612,499});
 		assertFalse(BinaryTree.equals(root1, root2));
 			
 		//	1
@@ -57,20 +57,20 @@ public class BinaryTreeTest {
 			
 		assertFalse(BinaryTree.equals(root1, root2));
 		
-		root1 = BinaryTree.integerArray2BinaryTree(new int[] {600,424,612,499,689});
-		root2 = BinaryTree.integerArray2BinaryTree(new int[] {600,612,499,689});
+		root1 = BinaryTree.integerArray2BinarySearchTree(new int[] {600,424,612,499,689});
+		root2 = BinaryTree.integerArray2BinarySearchTree(new int[] {600,612,499,689});
 		assertFalse(BinaryTree.equals(root1, root2));
 		
-		root1 = BinaryTree.integerArray2BinaryTree(new int[] {1,2,3,4,5});
-		root2 = BinaryTree.integerArray2BinaryTree(new int[] {1,2,3,4,5});
+		root1 = BinaryTree.integerArray2BinarySearchTree(new int[] {1,2,3,4,5});
+		root2 = BinaryTree.integerArray2BinarySearchTree(new int[] {1,2,3,4,5});
 		assertTrue(BinaryTree.equals(root1, root2));
 		
-		root1 = BinaryTree.integerArray2BinaryTree(new int[] {1,2,3,4,5});
-		root2 = BinaryTree.integerArray2BinaryTree(new int[] {1,2,4,5});
+		root1 = BinaryTree.integerArray2BinarySearchTree(new int[] {1,2,3,4,5});
+		root2 = BinaryTree.integerArray2BinarySearchTree(new int[] {1,2,4,5});
 		assertFalse(BinaryTree.equals(root1, root2));
 		
-		root1 = BinaryTree.integerArray2BinaryTree(new int[] {1,2,3,4,5});
-		root2 = BinaryTree.integerArray2BinaryTree(new int[] {3,4,5,1,2});
+		root1 = BinaryTree.integerArray2BinarySearchTree(new int[] {1,2,3,4,5});
+		root2 = BinaryTree.integerArray2BinarySearchTree(new int[] {3,4,5,1,2});
 		assertFalse(BinaryTree.equals(root1, root2));
 		
 	}
