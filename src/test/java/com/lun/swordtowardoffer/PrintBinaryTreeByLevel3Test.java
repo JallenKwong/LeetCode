@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.lun.util.BinaryTree;
 import com.lun.util.BinaryTree.TreeNode;
 
 public class PrintBinaryTreeByLevel3Test {

@@ -1,5 +1,8 @@
 package com.lun.swordtowardoffer;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class Singleton {
 	
 	//1.饿汉式（立即加载方式）（线性安全）
@@ -82,20 +85,41 @@ public class Singleton {
 	}
 	
 	//6.枚举
-	public enum SomeThing {
+	public enum Singleton6 {
 		INSTANCE;
+		
+		public void hello() {
+			
+		}
+		
+		/*
 		private Resource instance;
 	
 		class Resource {
 		}
 		
-		SomeThing() {
+		Singleton6() {
 			instance = new Resource();
 		}
 	
 		public Resource getInstance() {
 			return instance;
 		}
+		*/
+	}
+	
+	public static void main(String[] args) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		
+		Constructor con = Singleton6.class.getDeclaredConstructor();
+		//设置为可访问
+		con.setAccessible(true);
+		//构造两个不同的对象
+		Singleton6 singleton1 = (Singleton6)con.newInstance();
+		Singleton6 singleton2 = (Singleton6)con.newInstance();
+		//验证是否是不同对象
+		System.out.println(singleton1.equals(singleton2));
+		
+		
 	}
 	
 }

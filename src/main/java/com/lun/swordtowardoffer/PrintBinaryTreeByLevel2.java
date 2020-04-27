@@ -6,6 +6,12 @@ import com.lun.util.BinaryTree.TreeNode;
 
 public class PrintBinaryTreeByLevel2 {
 	
+	/**
+	 * 用两个队列
+	 * 
+	 * @param root
+	 * @return
+	 */
 	public String print(TreeNode root) {
 		if(root == null)
 			return "";
@@ -42,4 +48,46 @@ public class PrintBinaryTreeByLevel2 {
 		return sb.substring(0, sb.length() - 1);
 	}
 	
+	/**
+	 * 用两个变量标记
+	 * 
+	 * @param root
+	 * @return
+	 */
+	public String print2(TreeNode root) {
+		if(root == null)
+			return "";
+		StringBuilder sb = new StringBuilder();
+		LinkedList<TreeNode> queue = new LinkedList<>();
+		
+		queue.addLast(root);
+		
+		int nextLevel = 0;
+		int toBePrinted = 1;
+		
+		while(!queue.isEmpty()) {
+			TreeNode node = queue.removeFirst();
+			toBePrinted--;
+			
+			sb.append(node.val);
+			sb.append(' ');
+			
+			if(node.left != null) {
+				queue.addLast(node.left);
+				nextLevel++;
+			}
+			if(node.right != null) {
+				queue.addLast(node.right);		
+				nextLevel++;
+			}
+			
+			if(toBePrinted == 0) {
+				sb.deleteCharAt(sb.length() - 1);//删除多余的空格
+				sb.append('\n');
+				toBePrinted = nextLevel;
+				nextLevel = 0;
+			}
+		}
+		return sb.substring(0, sb.length() - 1);
+	}
 }

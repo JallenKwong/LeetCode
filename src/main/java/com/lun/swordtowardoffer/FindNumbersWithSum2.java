@@ -20,7 +20,6 @@ public class FindNumbersWithSum2 {
 		int middle = (1 + sum) / 2;
 		int curSum = small + big;
 		
-		
 		while(small < middle) {
 			if(curSum == sum) {
 				result.add(new Pair<>(small, big));
@@ -38,7 +37,6 @@ public class FindNumbersWithSum2 {
 			big++;
 			curSum += big;
 		}
-		
 		
 		return result;
 	}

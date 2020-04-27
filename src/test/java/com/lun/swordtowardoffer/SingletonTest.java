@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.lun.swordtowardoffer.Singleton.*;
-import com.lun.swordtowardoffer.Singleton.SomeThing;
 
 public class SingletonTest {
 
@@ -28,7 +27,9 @@ public class SingletonTest {
 		assertEquals(Singleton5.getInstance(), Singleton5.getInstance());
 		
 		//6.枚举
-		assertEquals(SomeThing.INSTANCE.getInstance(), SomeThing.INSTANCE.getInstance());;
+		assertEquals(Singleton6.INSTANCE, Singleton6.INSTANCE);
+		//assertEquals(Singleton6.INSTANCE.getInstance(), Singleton6.INSTANCE.getInstance());
+		
 	}
 
 }

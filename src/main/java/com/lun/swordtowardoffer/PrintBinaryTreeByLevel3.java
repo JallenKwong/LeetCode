@@ -13,7 +13,8 @@ public class PrintBinaryTreeByLevel3 {
 		StringBuilder sb = new StringBuilder();
 		
 		int level = 0;
-		LinkedList<TreeNode> stack1 = new LinkedList<>(), stack2 = new LinkedList<>();
+		LinkedList<TreeNode> stack1 = new LinkedList<>(), 
+				stack2 = new LinkedList<>();
 		
 		stack1.push(root);
 		
@@ -49,6 +50,6 @@ public class PrintBinaryTreeByLevel3 {
 			
 		}
 		
-		return sb.substring(0, sb.length() - 1);		
+		return sb.substring(0, sb.length() - 1);
 	}
 }

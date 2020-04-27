@@ -254,5 +254,51 @@ public class MinimumPathSum {
 	这个过程有点像织布
 
     */
+    
+    
+    public int minPathSum3(int[][] grid) {
+        
+    	if(grid == null || grid.length == 0|| grid[0].length == 0) {
+    		throw new IllegalArgumentException("illegal grid");
+    	}
+    	int rowNum = grid.length, colNum = grid[0].length;
+        int[] dist = new int[colNum];
+        
+        for(int i = 0; i < rowNum; i++) {
+        	for(int j = 0; j < colNum; j++) {
+        		if(i == 0 && j == 0) {
+        			dist[j] = grid[i][j];
+        		}else if(i == 0 && j != 0) {
+        			dist[j] = dist[j - 1] + grid[i][j];
+        		}else if(i != 0 && j == 0) {
+        			dist[j] = dist[j] + grid[i][j];
+        		}else {
+        			dist[j] = Math.min(dist[j], dist[j - 1]) + grid[i][j];
+        		}
+        		/* 另一种写法
+        		int left = 0, up = 0;
+        		
+        		if(i > 0) {
+        			up = dist[j];
+        			if(j == 0) {//第一列特殊情况
+        				left = Integer.MAX_VALUE;
+        			}
+        		}
+        		
+        		if(j > 0) {
+        			left = dist[j - 1];
+        			if(i == 0) {//第一行特殊情况
+        				up = Integer.MAX_VALUE;
+        			}
+        		}
+
+        		dist[j] = Math.min(up, left) + grid[i][j];
+        		 */
+        		
+        	}
+        }
+        
+        return dist[colNum - 1];
+    }
 
 }

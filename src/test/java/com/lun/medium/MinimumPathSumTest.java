@@ -58,6 +58,14 @@ public class MinimumPathSumTest {
 		Assert.assertEquals(823, new MinimumPathSum().minPathSum2(grid));
 		
 	}
+	@Test
+	public void test7() {
+		
+		int[][] grid = MyUtils.read2DIntArray("src/test/resources/2DArray.txt");
+		
+		Assert.assertEquals(823, new MinimumPathSum().minPathSum3(grid));
+		
+	}
 	
 	
 	
