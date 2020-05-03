@@ -10,5 +10,10 @@ public class GetSumHarshlyTest {
 	public void testCalc() {
 		assertEquals(5050, GetSumHarshly.sum(100));
 	}
+	
+	@Test
+	public void testCalc2() {
+		assertEquals(5050, GetSumHarshly.sum2(100));
+	}
 
 }

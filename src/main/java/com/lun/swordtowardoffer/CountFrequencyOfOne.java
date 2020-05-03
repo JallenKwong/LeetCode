@@ -1,6 +1,13 @@
 package com.lun.swordtowardoffer;
 
 public class CountFrequencyOfOne {
+	
+	/**
+	 * 使用>>>
+	 * 
+	 * @param src
+	 * @return
+	 */
 	public int count(int src) {
 		int count = 0;
 		
@@ -15,12 +22,31 @@ public class CountFrequencyOfOne {
 	}
 	
 	/**
-	 * 比较神奇的算法
+	 * 使用 << 
 	 * 
 	 * @param src
 	 * @return
 	 */
 	public int count2(int src) {
+		int count = 0;
+		int flag = 1;
+		while(flag != 0) {
+			
+			if((src & flag) != 0) {
+				count++;
+			}
+			flag <<= 1;
+		}
+		return count;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param src
+	 * @return
+	 */
+	public int count3(int src) {
 		int count = 0;
 		
 		while(src != 0) {

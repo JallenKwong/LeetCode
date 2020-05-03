@@ -16,6 +16,13 @@ public class CountFrequencyOfOneTest {
 		assertEquals(2, co.count2(9));
 		assertEquals(32, co.count2(0xFFFFFFFF));
 		assertEquals(31, co.count2(0x7FFFFFFF));
+		
+		assertEquals(2, co.count3(9));
+		assertEquals(32, co.count3(0xFFFFFFFF));
+		assertEquals(31, co.count3(0x7FFFFFFF));
+		
+		System.out.println(Integer.toHexString(0xFFFFFFFF - 1));
+		System.out.println(Integer.toBinaryString(0xFFFFFFFF - 1));
 	}
 
 }

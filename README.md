@@ -1,12 +1,10 @@
 >不积跬步，无以至千里。    ——荀子《劝学》
+>
+>Rome wasn't built in a day.
 
 # Sword Toward Offer #
 
 [Sword Toward Offer](src/main/java/com/lun/swordtowardoffer/)
-
-# Understanding the JVM #
-
-[Understanding the JVM](src/main/java/com/lun/other/jvm/)
 
 # LeetCode #
 

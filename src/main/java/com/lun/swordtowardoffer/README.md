@@ -166,6 +166,14 @@ tag:位运算
 
 [CountFrequencyOfOne](CountFrequencyOfOne.java)
 
+## 16. 数值的整数次方 ##
+
+tag:递归,位运算
+
+	实现函数 double Power(double base, int exponent)，求base的exponent次方。不得使用库函数，同时不需要考虑大数问题。
+
+[IntegerPowerOfValue](IntegerPowerOfValue.java)
+
 ## 17. 打印从1到最大的n位数 ##
 
 tag:字符串
