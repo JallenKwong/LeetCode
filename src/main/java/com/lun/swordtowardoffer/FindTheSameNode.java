@@ -18,7 +18,7 @@ public class FindTheSameNode {
 			pLong = pLong.next;
 			diff--;
 		}
-		
+				
 		while(pLong != null && pShort != null 
 				&& pLong != pShort) {
 			
@@ -26,7 +26,7 @@ public class FindTheSameNode {
 			pShort = pShort.next;
 		}
 		
-		return pLong;
+		return  pLong == pShort ? pLong : null;
 	}
 	
 	
@@ -42,6 +42,5 @@ public class FindTheSameNode {
 			
 		return result;
 	}
-	
 	
 }

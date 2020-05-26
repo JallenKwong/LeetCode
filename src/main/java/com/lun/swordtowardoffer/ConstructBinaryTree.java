@@ -1,9 +1,5 @@
 package com.lun.swordtowardoffer;
 
-
-import java.util.Arrays;
-import java.util.HashSet;
-
 import com.lun.util.BinaryTree.TreeNode;
 import com.lun.util.MyUtils;
 
@@ -12,7 +8,7 @@ public class ConstructBinaryTree {
 		
 		if(MyUtils.checkArrayEmpty(preorder) || MyUtils.checkArrayEmpty(inorder)
 				|| preorder.length != inorder.length) {
-			return null;
+			throw new IllegalArgumentException();
 		}
 		
 		return construct(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1);
@@ -23,27 +19,27 @@ public class ConstructBinaryTree {
 	 * 
 	 */
 	private TreeNode construct(int[] preorder, int[] inorder
-						, int preoStart, int preoEnd, int inStart, int inEnd) {
+						, int preoStart, int preoEnd, int inoStart, int inoEnd) {
 		
 		TreeNode node = new TreeNode(preorder[preoStart]);
 		if(preoStart == preoEnd) {
 			return node;
 		}
 		
-		int rootInoIndex = inStart;
-		while(rootInoIndex <= inEnd && inorder[rootInoIndex] != node.val) {
+		int rootInoIndex = inoStart;
+		while(rootInoIndex <= inoEnd && inorder[rootInoIndex] != node.val) {
 			++rootInoIndex;
 		}
-		int leftLength = rootInoIndex - inStart;
+		int leftLength = rootInoIndex - inoStart;
 		
 		if(leftLength > 0)
 			node.left = construct(preorder, inorder, preoStart + 1, preoStart + leftLength , 
-					inStart, rootInoIndex - 1);
+					inoStart, rootInoIndex - 1);
 		
 		
 		if(preoStart + leftLength < preoEnd)
 			node.right = construct(preorder, inorder, preoStart + leftLength + 1, preoEnd, 
-					rootInoIndex + 1, inEnd);
+					rootInoIndex + 1, inoEnd);
 				
 		return node;
 	}

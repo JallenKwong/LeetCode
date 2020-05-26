@@ -10,6 +10,7 @@ public class SetMismatchTest {
 		SetMismatch obj = new SetMismatch();
 
 		assertArrayEquals(new int[] {2, 3},  obj.findErrorNums(new int[] {1,2,2,4}));
+		assertArrayEquals(new int[] {2, 3},  obj.findErrorNums2(new int[] {1,2,2,4}));
 		
 	}
 }

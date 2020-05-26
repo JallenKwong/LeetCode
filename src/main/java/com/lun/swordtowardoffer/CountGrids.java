@@ -28,13 +28,9 @@ public class CountGrids {
 	}
 
 	private boolean check(int threshold, int rows, int cols, int row, int col, boolean[][] visited) {
-		
-		if(0 <= row && row < rows && 0 <= col && col < cols
+		return 0 <= row && row < rows && 0 <= col && col < cols
 				&& getDigitSun(row) + getDigitSun(col) <= threshold
-				&& !visited[row][col])
-			return true;
-		
-		return false;
+				&& !visited[row][col];
 	}
 	
 	private int getDigitSun(int number) {

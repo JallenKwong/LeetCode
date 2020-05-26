@@ -16,6 +16,11 @@ import java.util.Set;
  */
 public class MyUtils {
 
+	public static boolean checkListEmpty(List<?> list) {
+		return list == null || list.size() == 0;
+	}
+	
+	
 	/**
 	 * 检查基本整型数组是否为空
 	 * 
@@ -23,6 +28,16 @@ public class MyUtils {
 	 * @return
 	 */
 	public static boolean checkArrayEmpty(int[] array) {
+		return array == null || array.length == 0;
+	}
+	
+	/**
+	 * 检查基本长整型数组是否为空
+	 * 
+	 * @param array
+	 * @return
+	 */
+	public static boolean checkArrayEmpty(long[] array) {
 		return array == null || array.length == 0;
 	}
 	

@@ -1,9 +1,7 @@
 package com.lun.swordtowardoffer;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import com.lun.util.SinglyLinkedList.ListNode;
 
 public class FindTheSameNodeTest {
@@ -11,8 +9,10 @@ public class FindTheSameNodeTest {
 	private static ListNode list1;
 	private static ListNode list2;
 	
+	private static ListNode same;
+	
 	static {
-		ListNode same = new ListNode(6);
+		same = new ListNode(6);
 		same.next = new ListNode(7);
 		
 		list1 = new ListNode(1);
@@ -29,6 +29,7 @@ public class FindTheSameNodeTest {
 	public void testFind() {		
 		FindTheSameNode fn = new FindTheSameNode();
 		assertEquals(6, fn.find(list1, list2).val);
+		assertEquals(same, fn.find(list1, list2));
 	}
 
 	@Test

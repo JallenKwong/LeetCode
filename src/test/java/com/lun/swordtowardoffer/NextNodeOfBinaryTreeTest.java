@@ -1,9 +1,7 @@
 package com.lun.swordtowardoffer;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
-
 import com.lun.swordtowardoffer.NextNodeOfBinaryTree.TreeNode;
 
 public class NextNodeOfBinaryTreeTest {
@@ -52,7 +50,6 @@ public class NextNodeOfBinaryTreeTest {
 		assertEquals('c', nt.next(f).val);
 		
 		assertEquals('a', nt.next(i).val);
-		
 	}
 
 }

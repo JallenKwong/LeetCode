@@ -7,7 +7,7 @@ import org.junit.Test;
 public class FindTheMinOneInASpinnedSortedArrayTest {
 
 	@Test
-	public void testFind() {
+	public void testFrind() {
 		FindTheMinOneInASpinnedSortedArray fa = new FindTheMinOneInASpinnedSortedArray();
 		
 		assertEquals(1, fa.find(new int[] {3, 4, 5, 1, 2}));

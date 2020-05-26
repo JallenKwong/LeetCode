@@ -10,14 +10,12 @@ public class NextNodeOfBinaryTree {
 	}
 	
 	public TreeNode next(TreeNode node) {
-		
 		TreeNode result = null;
 		
 		if(node == null)
 			return result;
 		
-		
-		//若一个节点有右子树，那么它的下一个节点就是它的右子树的最左子树
+		//1. 若一个节点有右子树，那么它的下一个节点就是它的右子树的最左子树
 		if(node.left != null) {
 			TreeNode right = node.right;
 			

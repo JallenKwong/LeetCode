@@ -20,7 +20,7 @@ public class FindTheMinOneInASpinnedSortedArray {
 				break;
 			}
 			
-			indexMid = (index1 + index2) / 2;
+			indexMid = index1 + (index2 - index1) / 2;
 			
 			if(numbers[index1] == numbers[index2]
 					&& numbers[indexMid] == numbers[index1])
@@ -40,8 +40,8 @@ public class FindTheMinOneInASpinnedSortedArray {
 		
 		int result = numbers[index1];
 		
-		for(int i = index1 + 1;i <= index2;i++) {
-			if(result > numbers[i])
+		for(int i = index1 + 1; i <= index2; i++) {
+			if(numbers[i] < result)
 				result = numbers[i];
 		}
 		

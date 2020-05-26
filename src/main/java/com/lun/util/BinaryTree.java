@@ -14,7 +14,6 @@ public class BinaryTree {
 		public TreeNode left;
 		public TreeNode right;
 		public TreeNode(int x) { val = x; }
-		
 	}
 	
 	/**

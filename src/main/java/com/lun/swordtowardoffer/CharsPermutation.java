@@ -1,17 +1,16 @@
 package com.lun.swordtowardoffer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.lun.util.MyUtils;
 
 public class CharsPermutation {
-	public List<String> permute(char[] src) {
+	public List<String> permute(String src) {
 		List<String> list = new ArrayList<>();
 		
-		if(!MyUtils.checkArrayEmpty(src))
-			permute(list, "", src, 0);
+		if(!MyUtils.checkStringEmpty(src))
+			permute(list, "", src.toCharArray(), 0);
 		
 		return list;
 	}

@@ -30,7 +30,7 @@ public class CutRope {
 		for(int i = 4; i <= length; i++) {
 			max = 0;
 			
-			for(int j = 1; j <= i/2; ++j) {
+			for(int j = 1; j <= i / 2; ++j) {
 				int product = products[j] * products[i - j];
 				
 				if(max < product)
@@ -53,7 +53,7 @@ public class CutRope {
 	 * @return
 	 */
 	public int maxProductAfterCutting2(int length) {
-		if(length < 0)
+		if(length < 2)
 			return 0;
 		if(length == 2)
 			return 1;

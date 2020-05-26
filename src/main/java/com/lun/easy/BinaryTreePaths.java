@@ -7,6 +7,8 @@ import java.util.List;
 import com.lun.util.BinaryTree.TreeNode;
 
 public class BinaryTreePaths {
+	
+	//非递归版
     public List<String> binaryTreePaths(TreeNode root) {
     	List<String> result = new ArrayList<>();
     	
@@ -60,20 +62,15 @@ public class BinaryTreePaths {
     	return result;
     }
     
+    //递归版
     public List<String> binaryTreePaths2(TreeNode root) {
         List<String> answer = new ArrayList<String>();
-        if (root != null) searchBT(root, "", answer);
+        if (root != null) 
+        	searchBT(root, "", answer);
         return answer;
     }
     
-    /**
-     * 
-     * 前序遍历
-     * 
-     * @param root
-     * @param path
-     * @param answer
-     */
+    //前序遍历
     private void searchBT(TreeNode root, String path, List<String> answer) {
         if (root.left == null && root.right == null) 
         	answer.add(path + root.val);

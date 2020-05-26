@@ -6,10 +6,10 @@ import os,sys,re
 
 os.chdir("C:\\eclipse-workspace\\LeetCode")#使用相对位置，在eclipse环境下会跳到另一个目录
 
-print "Current working directory: "
+print("Current working directory: ")
 print os.getcwd()
 
-print "Please input the difficulty of problem. (e for Easy, m for Medium, h for Hard)"
+print("Please input the difficulty of problem. (e for Easy, m for Medium, h for Hard)")
 
 difficulty,fileName = "",""
 
@@ -19,9 +19,9 @@ while(True):
     if difficulty in ("e", "m", "h", 'E', 'M', 'H'):
         break
     else:
-        print "Input code wrongly. Please input again."
+        print("Input code wrongly. Please input again.")
     
-print "Please input the name of problem. e.g HelloWorld"
+print("Please input the name of problem. e.g HelloWorld")
 
 
 dirName = "src\\main\\java\\com\\lun\\"
@@ -46,7 +46,7 @@ while(True):
             continue
         break
     else:
-        print "Input file name wrongly. Please input again."
+        print("Input file name wrongly. Please input again.")
     
 
 #生成Md文件
@@ -87,10 +87,10 @@ testFile.write("\t}\n}\n")
 testFile.close()
 
 
-print "Create %s.md and %s.java and %sTest.java successfully! Press Enter to exit."%(fileName,fileName,fileName)
+print("Create %s.md and %s.java and %sTest.java successfully! Press Enter to exit."%(fileName,fileName,fileName))
 
 try:
     raw_input()
-    print "Bye!"
+    print("Bye!")
 except:
-    print "Bye!"
+    print("Bye!")

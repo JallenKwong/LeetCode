@@ -61,4 +61,17 @@ public class SinglyLinkedList {
 	}
 	
 	
+	public static String print(ListNode head) {
+		StringBuilder sb = new StringBuilder();
+		ListNode p = head;
+		while(p != null) {
+			sb.append(p.val);
+			p = p.next;
+			if(p != null) {
+				sb.append(',');
+			}
+		}
+		return sb.toString();
+	}
+	
 }

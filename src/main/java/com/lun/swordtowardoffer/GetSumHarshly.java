@@ -22,5 +22,23 @@ public class GetSumHarshly {
 	public static boolean calc(int n, int[] sum, int index) {
 		return (index > n) || (sum[0] += index) < 0 || calc(n, sum, index + 1);
 	}
+
+	
+	/**
+	 * 
+	 * 针对C语言的引用情况，在改换应用int[]，而不是Integer（可能暗藏自动拆包转换整型）
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public static int sum3(int n) {
+		Integer sum = 0;
+		calc2(n, sum, 1);
+		return sum;
+	}
+	
+	public static boolean calc2(int n, Integer sum, int index) {
+		return (index > n) || (sum += index) < 0 || calc2(n, sum, index + 1);
+	}
 	
 }

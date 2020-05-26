@@ -1,18 +1,40 @@
 package com.lun.easy;
 
 public class SetMismatch {
-    public int[] findErrorNums(int[] nums) {
-        int[] res = new int[2];
-        for (int i : nums) {
-            if (nums[Math.abs(i) - 1] < 0) 
-            	res[0] = Math.abs(i);
-            else 
-            	nums[Math.abs(i) - 1] *= -1;
-        }
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] > 0) 
-            	res[1] = i + 1;
-        }
-        return res;
+	public int[] findErrorNums(int[] nums) {
+	    int[] res = new int[2];
+	    for (int i : nums) {
+	        if (nums[Math.abs(i) - 1] < 0) 
+	        	res[0] = Math.abs(i);
+	        else 
+	        	nums[Math.abs(i) - 1] *= -1;
+	    }
+	    for (int i = 0; i < nums.length; i++) {
+	        if (nums[i] > 0) 
+	        	res[1] = i + 1;
+	    }
+	    return res;
+	}
+	    
+    public int[] findErrorNums2(int[] nums) {
+    	boolean[] flags = new boolean[nums.length + 1];
+    	int dup = 0, miss = 0;
+    	for(int item : nums) {
+    		if(flags[item]) {
+    			dup = item;
+    		}else {
+    			flags[item] = true;
+    		}
+    	}
+    	
+    	for(int index = 1; index < flags.length; index++) {
+    		if(!flags[index]) {
+    			miss = index;
+    			break;
+    		}
+    	}
+    	
+    	return new int[] {dup, miss};
     }
+    
 }

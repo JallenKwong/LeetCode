@@ -11,7 +11,7 @@ public class FindPathInMatrix {
 		
 		boolean[][] visited = new boolean[matrix.length][matrix[0].length];
 		
-		Integer pathLength = 0;
+		int[] pathLength = {0};
 		
 		for(int row = 0; row < matrix.length; row++) {
 			
@@ -26,19 +26,19 @@ public class FindPathInMatrix {
 	}
 
 	private boolean findCore(char[][] matrix, int row, int col, String str
-								, Integer pathLength, boolean[][] visited) {
+								, int[] pathLength, boolean[][] visited) {
 		
-		if(str.length() == pathLength) {
+		if(str.length() == pathLength[0]) {
 			return true;
 		}
 		
 		boolean result = false;
 		
 		if(row >= 0 && row < matrix.length && col >= 0 && col < matrix[0].length
-				&& matrix[row][col] == str.charAt(pathLength)
+				&& matrix[row][col] == str.charAt(pathLength[0])
 				&& !visited[row][col]) {
 			
-			++pathLength;
+			++pathLength[0];
 			
 			visited[row][col] = true;
 			
@@ -49,7 +49,7 @@ public class FindPathInMatrix {
 			
 			//尝试失败，进行补偿
 			if(!result) {
-				pathLength--;
+				pathLength[0]--;
 				visited[row][col] = false;
 			}
 			
