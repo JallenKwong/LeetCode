@@ -7,7 +7,8 @@ public class SqrtX {
 
 		while (left <= right) {
 			int mid = left + (right - left) / 2;
-			if (mid == x / mid) {//A little trick is using i <= x / i for comparison, instead of i * i <= x, to avoid exceeding integer upper limit.
+			if (mid == x / mid) {//A little trick is using i <= x / i for comparison, 
+								//instead of i * i <= x, to avoid exceeding integer upper limit.
 				return mid;
 			} else if (mid < x / mid) {
 				left = mid + 1;
@@ -19,14 +20,14 @@ public class SqrtX {
 		return right;
 	}
 
-	public int mySqrt2(int x) {
-		if (x == 0)
+	public int mySqrt2(int n) {
+		if (n == 0)
 			return 0;
 		double last = 0;
 		double res = 1;
 		while (res != last) {
 			last = res;
-			res = (res + x / res) / 2;
+			res = (res + n / res) / 2;
 		}
 		return (int) res;
 	}

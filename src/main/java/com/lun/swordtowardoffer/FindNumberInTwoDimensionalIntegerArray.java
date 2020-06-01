@@ -13,6 +13,7 @@ public class FindNumberInTwoDimensionalIntegerArray {
 			
 			while(row < rowNum && col >= 0) {
 				if(matrix[row][col] == target) {
+					//return true;
 					return new int[] {row, col};
 				}else if(matrix[row][col] > target) {
 					col--;
