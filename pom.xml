@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.1</version>
 			<scope>test</scope>
 			<!-- 
 			不将scope 注释，执行命令 ，mvn clean test会报异常			
