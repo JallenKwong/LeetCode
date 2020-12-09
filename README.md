@@ -1,14 +1,22 @@
 >不积跬步，无以至千里。    ——荀子《劝学》
->
->Rome wasn't built in a day.
 
 # Sword Toward Offer #
 
 [Sword Toward Offer](src/main/java/com/lun/swordtowardoffer/)
 
+# Understanding the JVM #
+
+[Understanding the JVM](src/main/java/com/lun/other/jvm/)
+
 # LeetCode #
 
 ## EASY ##
+
+- [AddBinary](src/main/java/com/lun/easy/AddBinary.md) --- [Solution Code](src/main/java/com/lun/easy/AddBinary.java) --- 数学 字符串
+
+
+- [AddDigits](src/main/java/com/lun/easy/AddDigits.md) --- [Solution Code](src/main/java/com/lun/easy/AddDigits.java) --- 
+
 
 - [BinaryTreePaths](src/main/java/com/lun/easy/BinaryTreePaths.md) --- [Solution Code](src/main/java/com/lun/easy/BinaryTreePaths.java) --- Tree, Depth-first Search
 
@@ -17,6 +25,12 @@
 
 
 - [DesignHashSet](src/main/java/com/lun/easy/DesignHashSet.md) --- [Solution Code](src/main/java/com/lun/easy/DesignHashSet.java) --- Hash Table, Design
+
+
+- [ExcelSheetColumnNumber](src/main/java/com/lun/easy/ExcelSheetColumnNumber.md) --- [Solution Code](src/main/java/com/lun/easy/ExcelSheetColumnNumber.java) --- 数学
+
+
+- [ExcelSheetColumnTitle](src/main/java/com/lun/easy/ExcelSheetColumnTitle.md) --- [Solution Code](src/main/java/com/lun/easy/ExcelSheetColumnTitle.java) --- 数学
 
 
 - [LowestCommonAncestorOfABinarySearchTree](src/main/java/com/lun/easy/LowestCommonAncestorOfABinarySearchTree.md) --- [Solution Code](src/main/java/com/lun/easy/LowestCommonAncestorOfABinarySearchTree.java) --- Tree
@@ -34,7 +48,13 @@
 - [ReverseWordsInAStringIII](src/main/java/com/lun/easy/ReverseWordsInAStringIII.md) --- [Solution Code](src/main/java/com/lun/easy/ReverseWordsInAStringIII.java) --- String
 
 
+- [RomanToInteger](src/main/java/com/lun/easy/RomanToInteger.md) --- [Solution Code](src/main/java/com/lun/easy/RomanToInteger.java) --- 数学、字符串
+
+
 - [RotateArray](src/main/java/com/lun/easy/RotateArray.md) --- [Solution Code](src/main/java/com/lun/easy/RotateArray.java) --- Array
+
+
+- [SetMismatch](src/main/java/com/lun/easy/SetMismatch.md) --- [Solution Code](src/main/java/com/lun/easy/SetMismatch.java) --- Hash Table,Math
 
 
 - [SqrtX](src/main/java/com/lun/easy/SqrtX.md) --- [Solution Code](src/main/java/com/lun/easy/SqrtX.java) --- Math,Binary Search
@@ -45,7 +65,13 @@
 
 ## MEDIUM ##
 
+- [AddTwoNumbers](src/main/java/com/lun/medium/AddTwoNumbers.md) --- [Solution Code](src/main/java/com/lun/medium/AddTwoNumbers.java) --- 链表 数学
+
+
 - [BoatsToSavePeople](src/main/java/com/lun/medium/BoatsToSavePeople.md) --- [Solution Code](src/main/java/com/lun/medium/BoatsToSavePeople.java) --- Two Pointers, Greedy
+
+
+- [CoinChange](src/main/java/com/lun/medium/CoinChange.md) --- [Solution Code](src/main/java/com/lun/medium/CoinChange.java) --- Dynamic Programming
 
 
 - [EvaluateDivision](src/main/java/com/lun/medium/EvaluateDivision.md) --- [Solution Code](src/main/java/com/lun/medium/EvaluateDivision.java) --- Graph
@@ -75,9 +101,15 @@
 - [ThreeSumWithMultiplicity](src/main/java/com/lun/medium/ThreeSumWithMultiplicity.md) --- [Solution Code](src/main/java/com/lun/medium/ThreeSumWithMultiplicity.java) --- Two Pointers
 
 
+- [ValidateIPAddress](src/main/java/com/lun/medium/ValidateIPAddress.md) --- [Solution Code](src/main/java/com/lun/medium/ValidateIPAddress.java) --- 正则表达式 字符串
+
+
 ## HARD ##
 
 - [BestTimeToBuyAndSellStockIII](src/main/java/com/lun/hard/BestTimeToBuyAndSellStockIII.md) --- [Solution Code](src/main/java/com/lun/hard/BestTimeToBuyAndSellStockIII.java) --- Dynamic Programming, Array
+
+
+- [BinaryTreePostorderTraversal](src/main/java/com/lun/hard/BinaryTreePostorderTraversal.md) --- [Solution Code](src/main/java/com/lun/hard/BinaryTreePostorderTraversal.java) --- Binary Tree
 
 
 - [CountOfSmallerNumbersAfterSelf](src/main/java/com/lun/hard/CountOfSmallerNumbersAfterSelf.md) --- [Solution Code](src/main/java/com/lun/hard/CountOfSmallerNumbersAfterSelf.java) --- Divide and Conquer, Binary Indexed Tree, Binary Search Tree, Segment Tree
@@ -93,5 +125,5 @@
 
 Total|Easy|Medium|Hard
 ---|---|---|---
-25|11|10|4
+35|17|13|5
 

@@ -10,8 +10,7 @@ import com.lun.util.SinglyLinkedList.ListNode;
 public class FindEntryNodeOfLoopTest {
 
 	@Test
-	public void test() {
-		
+	public void test() {	
 		FindEntryNodeOfLoop fl = new FindEntryNodeOfLoop();
 		
 		ListNode n1 = new ListNode(1);
@@ -36,15 +35,10 @@ public class FindEntryNodeOfLoopTest {
 		
 	}
 	
-	
 	@Test
 	public void test2() {
-		
-		FindEntryNodeOfLoop fl = new FindEntryNodeOfLoop();
-		
+		FindEntryNodeOfLoop fl = new FindEntryNodeOfLoop();		
 		assertNull(fl.meetNode(SinglyLinkedList.intArray2List(new int[] {1, 2, 3, 4, 5, 6})));
-		
 	}
 	
-
 }

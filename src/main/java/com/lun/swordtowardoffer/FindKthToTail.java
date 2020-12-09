@@ -7,33 +7,40 @@ public class FindKthToTail {
 	/**
 	 * 递归的方式
 	 * 
-	 * @param head
-	 * @param k
-	 * @return
 	 */
 	public ListNode find(ListNode head, int k) {
-		return find(head, k, new IntWrapper());
+		if(head == null || k <= 0) 
+			throw new IllegalArgumentException();
+		return find(head, k, new int[] {0});
 	}
+	
+	private ListNode find(ListNode head, int k, int[] count) {
+		if(head == null) {
+			return null;
+		}
+		
+		ListNode node = find(head.next, k, count);
+		count[0] += 1;
+		
+		if(count[0] == k) {
+			return head;
+		}
+		
+		return node;
+	}
+	
 	
 	/**
 	 * 我亲手撸的
 	 * 用两指针的方式
 	 * 
-	 * @param head
-	 * @param k
-	 * @return
 	 */
 	public ListNode find2(ListNode head, int k) {
 		
-		if(k <= 0) {
-			return null;
-		}
+		if(head == null || k <= 0) 
+			throw new IllegalArgumentException();
 		
 		ListNode p1 = null, p2 = head;
-		
-		if(p2 == null) {
-			return p2;
-		}
 		
 		int count = 1;
 		
@@ -64,12 +71,10 @@ public class FindKthToTail {
 	 * 书上的
 	 * 用两指针的方式
 	 * 
-	 * @param head
-	 * @param k
-	 * @return
 	 */
 	public ListNode find3(ListNode head, int k) {
-		if(k <= 0) return null;
+		if(head == null || k <= 0) 
+			throw new IllegalArgumentException();
 		
 		ListNode p1 = head;
 		ListNode p2 = head;
@@ -88,25 +93,6 @@ public class FindKthToTail {
 		}
 		
 		return p1;
-	}
-	
-	private class IntWrapper{
-		public int value = 0;
-	}
-	
-	private ListNode find(ListNode head, int k, IntWrapper iw) {
-		if(head == null) {
-			return null;
-		}
-		
-		ListNode node = find(head.next, k, iw);
-		iw.value += 1;
-		
-		if(iw.value == k) {
-			return head;
-		}
-		
-		return node;
 	}
 	
 }

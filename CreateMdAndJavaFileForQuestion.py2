@@ -54,8 +54,10 @@ while(True):
 mdFile = open(dirName + fileName + ".md","w")
 
 mdFile.write("# " + fileName + " #\n\n")
-mdFile.write("tag:\n\n")#标签
+#mdFile.write("tag:\n\n")#标签
 #mdFile.write("[]()\n\n")#链接地址
+mdFile.write("\n\n")
+mdFile.write("## Code\n\n")
 mdFile.write("[Source Code](%s.java)\n\n"%fileName)
 mdFile.write("[Test Code](%sTest.java)\n\n"%fileName)#链接地址
 

@@ -6,26 +6,26 @@ public class FindEntryNodeOfLoop {
 
 	public ListNode find(ListNode head) {
 		
+		//1.判断是否存在环
 		ListNode meetNode = meetNode(head);
 		
-		//1.判断是否存在环
 		if(meetNode == null) {
 			return null;
 		}
 		
-		int nodesInLoop = 1;
+		int numOfNodesInLoop = 1;
 		
 		ListNode node1 = meetNode;
 		
 		//2.计算环内节点
 		while(node1.next != meetNode) {
-			nodesInLoop++;
+			numOfNodesInLoop++;
 			node1 = node1.next;
 		}
 		
 		//3.先移动node1, 次数为环中节点的数目
 		node1 = head;
-		for(int i = 0; i < nodesInLoop; i++)
+		for(int i = 0; i < numOfNodesInLoop; i++)
 			node1 = node1.next;
 		
 		ListNode node2 = head;
