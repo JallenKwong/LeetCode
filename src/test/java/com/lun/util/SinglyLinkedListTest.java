@@ -10,26 +10,26 @@ public class SinglyLinkedListTest {
 	@Test
 	public void testIntArray2List() {
 		ListNode list1 = SinglyLinkedList.intArray2List(new int[] {1,2,3});
-		System.out.println(list1);
+		System.out.println(SinglyLinkedList.print(list1));
 	}
 
 	@Test
 	public void testEqualsListNodeListNode() {
 		ListNode list1 = SinglyLinkedList.intArray2List(new int[] {1,2,3});
 		ListNode list2 = SinglyLinkedList.intArray2List(new int[] {1,2,3});
-		assertTrue(SinglyLinkedList.equals(list1, list2));
+		assertTrue(SinglyLinkedList.areTwoListEqual(list1, list2));
 		
 		list1 = SinglyLinkedList.intArray2List(new int[] {1,2,3});
 		list2 = SinglyLinkedList.intArray2List(new int[] {1,2});
-		assertFalse(SinglyLinkedList.equals(list1, list2));
+		assertFalse(SinglyLinkedList.areTwoListEqual(list1, list2));
 		
 		list1 = SinglyLinkedList.intArray2List(null);
 		list2 = SinglyLinkedList.intArray2List(new int[] {1,2});
-		assertFalse(SinglyLinkedList.equals(list1, list2));
+		assertFalse(SinglyLinkedList.areTwoListEqual(list1, list2));
 		
 		list1 = SinglyLinkedList.intArray2List(null);
 		list2 = SinglyLinkedList.intArray2List(null);
-		assertTrue(SinglyLinkedList.equals(list1, list2));
+		assertTrue(SinglyLinkedList.areTwoListEqual(list1, list2));
 	}
 
 }

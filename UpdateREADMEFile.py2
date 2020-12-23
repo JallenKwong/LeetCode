@@ -1,5 +1,17 @@
 # -*- coding: utf-8 -*
 
+
+print("Please modify this py file.")
+
+try:
+    raw_input()
+    print("Bye!")
+except:
+    print("Bye!")
+
+exit(0)
+
+
 #将已完成的题目索引制造到本目录的README.md
 
 import os

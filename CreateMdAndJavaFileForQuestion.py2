@@ -35,13 +35,14 @@ else:
 
 dirName = dirName + difficulty + "\\"
 
+noteDirName = "note\\%s\\" % difficulty
 
 while(True):
 
     fileName = raw_input()
 
     if re.match(r"^[A-Z][A-Za-z0-9]*", fileName):
-        if os.path.exists(dirName + fileName + ".md"):
+        if os.path.exists(noteDirName + fileName + ".md"):
             print(dirName + fileName + ".md's existed. Please check.")
             continue
         break
@@ -51,15 +52,16 @@ while(True):
 
 #生成Md文件
 
-mdFile = open(dirName + fileName + ".md","w")
+
+mdFile = open(noteDirName + fileName + ".md","w")
+
+difficultyAndFileName = (difficulty, fileName)
 
 mdFile.write("# " + fileName + " #\n\n")
-#mdFile.write("tag:\n\n")#标签
-#mdFile.write("[]()\n\n")#链接地址
 mdFile.write("\n\n")
 mdFile.write("## Code\n\n")
-mdFile.write("[Source Code](%s.java)\n\n"%fileName)
-mdFile.write("[Test Code](%sTest.java)\n\n"%fileName)#链接地址
+mdFile.write("[Source Code](../../src/main/java/com/lun/%s/%s.java)\n\n" % difficultyAndFileName)
+mdFile.write("[Test Code](../../src/test/java/com/lun/%s/%sTest.java)\n\n" % difficultyAndFileName)
 
 
 mdFile.close()

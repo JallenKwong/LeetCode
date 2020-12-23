@@ -17,7 +17,7 @@ public class MergeTwoSortedListsTest {
 		
 		ListNode expected = SinglyLinkedList.intArray2List(new int[] {1, 1, 2, 3, 4, 4});
 		
-		assertTrue(SinglyLinkedList.equals(expected, ml.mergeTwoLists(L1, L2)));
+		assertTrue(SinglyLinkedList.areTwoListEqual(expected, ml.mergeTwoLists(L1, L2)));
 	}
 	@Test
 	public void test2() {
@@ -28,6 +28,6 @@ public class MergeTwoSortedListsTest {
 		
 		ListNode expected = SinglyLinkedList.intArray2List(new int[] {1, 2, 3, 4, 5, 6, 7, 8});
 		
-		assertTrue(SinglyLinkedList.equals(expected, ml.mergeTwoLists(L1, L2)));
+		assertTrue(SinglyLinkedList.areTwoListEqual(expected, ml.mergeTwoLists(L1, L2)));
 	}
 }
