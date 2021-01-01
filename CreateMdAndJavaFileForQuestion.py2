@@ -57,7 +57,7 @@ mdFile = open(noteDirName + fileName + ".md","w")
 
 difficultyAndFileName = (difficulty, fileName)
 
-mdFile.write("# " + fileName + " #\n\n")
+mdFile.write("# %s\n\n" % fileName)
 mdFile.write("\n\n")
 mdFile.write("## Code\n\n")
 mdFile.write("[Source Code](../../src/main/java/com/lun/%s/%s.java)\n\n" % difficultyAndFileName)
