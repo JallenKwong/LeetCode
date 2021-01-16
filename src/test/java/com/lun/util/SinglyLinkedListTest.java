@@ -31,5 +31,14 @@ public class SinglyLinkedListTest {
 		list2 = SinglyLinkedList.intArray2List(null);
 		assertTrue(SinglyLinkedList.areTwoListEqual(list1, list2));
 	}
+	
+	
+	@Test(expected = RuntimeException.class)
+	public void testEqualsListNodeListNode2() {
+		ListNode list1 = SinglyLinkedList.ints2List(1, 2, 3);
+		ListNode list2 = SinglyLinkedList.ints2List(1, 2, 4);
+		
+		assertTrue(SinglyLinkedList.areTwoListEqual2(list1, list2));
+	}
 
 }

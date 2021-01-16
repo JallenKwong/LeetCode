@@ -75,8 +75,7 @@ public class SinglyLinkedList {
 	 * @return
 	 */
 	public static boolean areTwoListEqual(ListNode list1, ListNode list2) {
-		if(list1 == null && list2 != null
-				|| list1 != null && list2 == null) {
+		if(list1 == null ^ list2 == null) {
 			return false;
 		}
 		
@@ -90,6 +89,21 @@ public class SinglyLinkedList {
 		return true;
 	}
 	
+	/**
+	 * 判断两条单向链表是否相同，若为false，打印两链表内容
+	 * 
+	 * @param list1
+	 * @param list2
+	 * @return
+	 */
+	public static boolean areTwoListEqual2(ListNode list1, ListNode list2) {
+		boolean result = areTwoListEqual(list1, list2);
+		if(!result) {
+			String message = "They doesn't equals. list1: %s, list2: %s.";
+			throw new RuntimeException(String.format(message, print(list1), print(list2)));
+		}
+		return result;
+	}
 	
 	public static String print(ListNode head) {
 		StringBuilder sb = new StringBuilder();
