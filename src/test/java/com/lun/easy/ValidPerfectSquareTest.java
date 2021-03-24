@@ -18,7 +18,7 @@ public class ValidPerfectSquareTest {
 		assertTrue(obj.isPerfectSquare(49));
 		assertFalse(obj.isPerfectSquare(50));
 	}
-	
+
 	@Test
 	public void test2() {
 		ValidPerfectSquare obj = new ValidPerfectSquare();
@@ -32,7 +32,7 @@ public class ValidPerfectSquareTest {
 		assertTrue(obj.isPerfectSquare2(49));
 		assertFalse(obj.isPerfectSquare2(50));
 	}
-	
+
 	@Test
 	public void test3() {
 		ValidPerfectSquare obj = new ValidPerfectSquare();
@@ -47,7 +47,7 @@ public class ValidPerfectSquareTest {
 		assertFalse(obj.isPerfectSquare3(50));
 		assertFalse(obj.isPerfectSquare3(Integer.MAX_VALUE));
 	}
-	
+
 	@Test
 	public void test4() {
 		ValidPerfectSquare obj = new ValidPerfectSquare();
@@ -61,5 +61,5 @@ public class ValidPerfectSquareTest {
 		assertTrue(obj.isPerfectSquare4(49));
 		assertFalse(obj.isPerfectSquare4(50));
 	}
-	
+
 }

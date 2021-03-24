@@ -1,5 +1,7 @@
 package com.lun.util;
 
+import java.util.LinkedList;
+
 public class BinaryTree {
 
 	/**
@@ -87,6 +89,59 @@ public class BinaryTree {
 		return root;
 	}
 
+	
+	/**
+	 * 
+	 * 以BFS的方式创建一棵二叉树。
+	 * 
+	 * 例如：用{3, 4, 5, 5, 4, null, 7}可以创建以下二叉树。<br>
+	 * 
+	 * &nbsp;&nbsp;&nbsp;&nbsp;3<br>
+	 * &nbsp;&nbsp;&nbsp;/&nbsp;\<br>
+	 * &nbsp;&nbsp;4 &nbsp; 5<br>
+	 * &nbsp;/&nbsp;\ &nbsp; \<br>
+	 * 5 &nbsp; 4 &nbsp; 7<br>
+	 * 
+	 * @param array
+	 * @return
+	 */
+	public static TreeNode integers2BinaryTree(Integer... array) {
+		if(array == null || array.length == 0 || array[0] == null)
+			throw new IllegalArgumentException();
+		
+		TreeNode root = new TreeNode(array[0]);
+		LinkedList<TreeNode> queue = new LinkedList<>();
+		queue.offer(root);
+		int i = 1;
+		while(i < array.length) {
+			TreeNode parent = queue.poll();
+			
+			TreeNode node = null;
+			if(i < array.length && array[i] != null) {
+				node = new TreeNode(array[i]);
+				
+				if(parent == null)
+					throw new NullPointerException(String.format("The parent is null, left node:%d can't point to.", array[i]));
+				parent.left = node;
+			}
+			queue.offer(node);
+			i++;
+			
+			node = null;
+			if(i < array.length && array[i] != null) {
+				node = new TreeNode(array[i]);
+				if(parent == null)
+					throw new NullPointerException(String.format("The parent is null, right node:%d can't point to.", array[i]));
+				parent.right = node;
+			}
+			queue.offer(node);
+			i++;
+		}
+		
+		return root;
+	}
+	
+	
 	/**
 	 * 前序遍历
 	 * 
